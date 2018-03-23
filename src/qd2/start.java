@@ -158,7 +158,7 @@ public class start extends javax.swing.JFrame {
         List iGuilds = cli.getGuilds();
             IGuild g = (IGuild) iGuilds.get(0);
             chnList = g.getChannels();
-            displayText.append("Guild [id,name]" + g.getStringID() + " - " + g.getName() + "\n");
+            displayText.append("Guild. [id,name]" + g.getStringID() + " - " + g.getName() + "\n");
         
         if (chnList.size()>0) {
             IChannel ch = (IChannel) chnList.get(0);
