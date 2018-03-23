@@ -4,12 +4,13 @@
  * no work may be reproduced without prior consent.
  * All Rights Reserved.
  */
-package qd2;
+package qd2.api;
 
 /**
  *
  * @author idiot
  */
+import qd2.BotUtils;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 

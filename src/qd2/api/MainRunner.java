@@ -4,13 +4,15 @@
  * no work may be reproduced without prior consent.
  * All Rights Reserved.
  */
-package qd2;
+package qd2.api;
 
 /**
  *
  * @author idiot
  */
+import qd2.BotUtils;
 import java.util.logging.Level;
+import qd2.start;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.IListener;
