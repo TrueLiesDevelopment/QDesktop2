@@ -1,6 +1,6 @@
 /*
  * All work contained within is subject to copyright.
- * (c)2017 - Phil Crumpton
+ * (c)2018
  * no work may be reproduced without prior consent.
  * All Rights Reserved.
  */
@@ -25,12 +25,7 @@ public class MainRunner {
     
     public MainRunner(){
 
-
         IDiscordClient cli = BotUtils.getBuiltDiscordClient("NDI2MTkzMjMxNTU5MTMxMTY2.DZSrxg.aAy4spfZItLZtwn3-N7ISD2SMyo");
-        ClientBuilder clientBuilder = new ClientBuilder();
-        clientBuilder.withToken("NDI2MTkzMjMxNTU5MTMxMTY2.DZSrxg.aAy4spfZItLZtwn3-N7ISD2SMyo");
-        
-        
 
         cli.getDispatcher().registerListener(new IListener<MessageReceivedEvent>() {
             public void handle(MessageReceivedEvent event) {
@@ -43,12 +38,10 @@ public class MainRunner {
         // Register a listener via the EventSubscriber - changed soon
         cli.getDispatcher().registerListener(new MyEvents());
 
-        // altered.
-try {
-            
-        //clientBuilder.login();
         
-
+try {
+        // altered.
+        //clientBuilder.login();
             
         } catch (NullPointerException e) {
             java.util.logging.Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, e);

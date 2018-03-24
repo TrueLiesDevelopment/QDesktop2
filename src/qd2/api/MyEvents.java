@@ -1,6 +1,6 @@
 /*
  * All work contained within is subject to copyright.
- * (c)2017 - MrScabby
+ * (c)2018 - MrScabby, TrueLies CNN
  * no work may be reproduced without prior consent.
  * All Rights Reserved.
  */
@@ -18,10 +18,15 @@ public class MyEvents {
 
     @EventSubscriber
     public void onMessageReceived(MessageReceivedEvent event){
-        if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "test"))
-            BotUtils.sendMessage(event.getChannel(), "I am sending a message from an EventSubscriber listener");
+        if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "hello"))
+            BotUtils.sendMessage(event.getChannel(), "ahh hello, welcome.");
+        
+        if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "delete"))
+            BotUtils.sendMessage(event.getChannel(), "ahh hello, welcome.");
     }
     
-    
+    /*
+    Im considering an edit to this
+    */
 
 }

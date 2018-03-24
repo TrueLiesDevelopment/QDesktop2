@@ -1,6 +1,6 @@
 /*
  * All work contained within is subject to copyright.
- * (c)2017 - MrScabby - 
+ * (c)2018 
  * no work may be reproduced without prior consent.
  * All Rights Reserved.
  */
@@ -90,7 +90,7 @@ public class start extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(loginBut, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(227, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

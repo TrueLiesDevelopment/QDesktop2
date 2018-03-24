@@ -1,6 +1,6 @@
 /*
  * All work contained within is subject to copyright.
- * (c)2017 - Phil Crumpton
+ * (c)2018
  * no work may be reproduced without prior consent.
  * All Rights Reserved.
  */
@@ -34,7 +34,7 @@ public static IDiscordClient getBuiltDiscordClient(String token){
     }
 
     // Helper functions sendMessage
-public    static void sendMessage(IChannel channel, String message){
+public static void sendMessage(IChannel channel, String message){
 
         
         RequestBuffer.request(() -> {
