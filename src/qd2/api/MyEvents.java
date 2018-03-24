@@ -1,6 +1,6 @@
 /*
  * All work contained within is subject to copyright.
- * (c)2017 - Phil Crumpton
+ * (c)2017 - MrScabby
  * no work may be reproduced without prior consent.
  * All Rights Reserved.
  */
