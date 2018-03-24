@@ -1,6 +1,6 @@
 /*
  * All work contained within is subject to copyright.
- * (c)2017 - Phil Crumpton
+ * (c)2017 - MrScabby - 
  * no work may be reproduced without prior consent.
  * All Rights Reserved.
  */
@@ -9,8 +9,6 @@ package qd2;
 import qd2.api.MyEvents;
 import java.util.List;
 import java.util.logging.Level;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;

@@ -31,9 +31,7 @@ public class MainRunner {
         clientBuilder.withToken("NDI2MTkzMjMxNTU5MTMxMTY2.DZSrxg.aAy4spfZItLZtwn3-N7ISD2SMyo");
         
         
-        // Commented out as you don't really want duplicate listeners unless you're intentionally writing your code 
-        // like that.
-        // Register a listener via the IListener interface
+
         cli.getDispatcher().registerListener(new IListener<MessageReceivedEvent>() {
             public void handle(MessageReceivedEvent event) {
                 if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "test"))
@@ -42,10 +40,10 @@ public class MainRunner {
         });
        
 
-        // Register a listener via the EventSubscriber annotation which allows for organisation and delegation of events
+        // Register a listener via the EventSubscriber - changed soon
         cli.getDispatcher().registerListener(new MyEvents());
 
-        // Only login after all events are registered otherwise some may be missed.
+        // altered.
 try {
             
         //clientBuilder.login();
