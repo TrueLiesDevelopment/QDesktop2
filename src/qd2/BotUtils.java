@@ -21,16 +21,15 @@ import sx.blah.discord.util.RequestBuffer;
 public class BotUtils {
 
     // Constant
-public static String BOT_PREFIX = "/";
+public static String BOT_PREFIX = ".";
 
     // IDiscordClient object for a token
 public static IDiscordClient getBuiltDiscordClient(String token){
 
         // Such as withToken, setDaemon etc
         return new ClientBuilder()
-                .withToken(token)
-                .build();
-
+                    .withToken(token)
+                    .build();
     }
 
     // Helper functions sendMessage

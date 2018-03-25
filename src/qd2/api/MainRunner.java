@@ -26,7 +26,7 @@ public class MainRunner {
     public MainRunner(){
 
         IDiscordClient cli = BotUtils.getBuiltDiscordClient("NDI2MTkzMjMxNTU5MTMxMTY2.DZSrxg.aAy4spfZItLZtwn3-N7ISD2SMyo");
-
+        
         cli.getDispatcher().registerListener(new IListener<MessageReceivedEvent>() {
             public void handle(MessageReceivedEvent event) {
                 if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "test"))
@@ -34,15 +34,11 @@ public class MainRunner {
             }
         });
        
-
         // Register a listener via the EventSubscriber - changed soon
         cli.getDispatcher().registerListener(new MyEvents());
 
-        
 try {
-        // altered.
-        //clientBuilder.login();
-            
+
         } catch (NullPointerException e) {
             java.util.logging.Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, e);
             System.out.println("Error in line " + e.getStackTrace());

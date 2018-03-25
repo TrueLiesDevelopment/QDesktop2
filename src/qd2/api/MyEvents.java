@@ -22,7 +22,7 @@ public class MyEvents {
             BotUtils.sendMessage(event.getChannel(), "ahh hello, welcome.");
         
         if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "delete"))
-            BotUtils.sendMessage(event.getChannel(), "ahh hello, welcome.");
+            BotUtils.sendMessage(event.getChannel(), "not allowed");
     }
     
     /*

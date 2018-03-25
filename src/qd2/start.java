@@ -6,12 +6,15 @@
  */
 package qd2;
 
+import java.awt.Color;
+import java.awt.Toolkit;
 import qd2.api.MyEvents;
 import java.util.List;
 import java.util.logging.Level;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -32,11 +35,23 @@ public class start extends javax.swing.JFrame {
     public IDiscordClient cli = null;
     public IDiscordClient shrd = null;
     
+    public boolean flag = false;                    // login flag, checks for username existance
+    
+    public Color amber = new Color(0xFAA61A);
+    public Color green = new Color(0x43B581);
+    public Color red = new Color(0xF04747);
+    
+    public Color text = new Color(0xBBBBA9);
+    
     /**
      * Creates new form start
      */
     public start() {
+        
         initComponents();
+        
+        java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(screenSize.width, screenSize.height);
     }
 
     /**
@@ -48,24 +63,35 @@ public class start extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
         loginBut = new javax.swing.JButton();
         statusLabel = new javax.swing.JTextField();
         getBut = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayText = new javax.swing.JTextArea();
+        username = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        loginBut.setText("Log in");
+        jTabbedPane1.setToolTipText("First step");
+
+        loginBut.setText("Log In");
         loginBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginButActionPerformed(evt);
             }
         });
 
+        statusLabel.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        statusLabel.setForeground(new java.awt.Color(240, 71, 71));
+        statusLabel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         statusLabel.setText("off-line");
 
         getBut.setText("Get Details");
+        getBut.setEnabled(false);
         getBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 getButActionPerformed(evt);
@@ -76,78 +102,128 @@ public class start extends javax.swing.JFrame {
         displayText.setRows(5);
         jScrollPane1.setViewportView(displayText);
 
+        username.setText("MrScabby");
+        username.setToolTipText("Enter your online Username");
+
+        jLabel1.setText("Username");
+
+        jLabel2.setText("Online Status");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(getBut, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(loginBut, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(608, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(loginBut)
+                    .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(getBut)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(215, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Lock and Load", jPanel1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(getBut, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(loginBut, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(227, Short.MAX_VALUE))
+                .addGap(47, 47, 47)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loginBut)
-                    .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(getBut)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(64, 64, 64)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButActionPerformed
-        
-        statusLabel.setText("logging in..");
-        
-        cli = BotUtils.getBuiltDiscordClient("NDI2NDU4OTAzODgzMDIyMzU2.DZWXBg.GqluTwQt5yJvVoQZPFuklaksbsw");
 
-        cli.getDispatcher().registerListener(new IListener<MessageReceivedEvent>() {
-            public void handle(MessageReceivedEvent event) {
-                if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "test"))
-                    BotUtils.sendMessage(event.getChannel(), "I am sending a message from an IListener listener");
-            }
-        });
-        cli.getDispatcher().registerListener(new MyEvents());
-        cli.login();
-        while (!cli.isLoggedIn()) { }
-        if (cli.isLoggedIn()) statusLabel.setText("on line");
-        System.out.println("end!");
-       
-
+        String loginButStatus = loginBut.getText();
+        if(loginButStatus.length()<1) { return; }
         
+        
+            cli = null;
+        
+            cli = BotUtils.getBuiltDiscordClient("NDI2NDU4OTAzODgzMDIyMzU2.DZWXBg.GqluTwQt5yJvVoQZPFuklaksbsw");
+
+            cli.getDispatcher().registerListener(new IListener<MessageReceivedEvent>() {
+                public void handle(MessageReceivedEvent event) {
+                    if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "test"))
+                        BotUtils.sendMessage(event.getChannel(), "I am sending a message from an IListener listener");
+                }
+            });
+        
+            cli.getDispatcher().registerListener(new MyEvents());
+        
+            cli.login();
+        
+            while (!cli.isLoggedIn()) { }                   // wait till confirmed login
+            if (cli.isLoggedIn()) statusLabel.setForeground(green);statusLabel.setText("on line");
+            
+    
     }//GEN-LAST:event_loginButActionPerformed
 
     private void getButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getButActionPerformed
         
-        List aList = cli.getGuilds();
-        for(int i = 0;i<aList.size();i++){
-            Guild guild = (Guild) aList.get(i);
-            long id = (long) guild.getLongID();
-            displayText.append("Guild:" + id + "\n");
-        }
+        if (!cli.isLoggedIn()){ return; }
         
-        List bList = cli.getUsers();
-        for(int i = 0;i<bList.size();i++){
-            IUser user = (User) bList.get(i);
-            
+        cli.getChannels().get(0).sendMessage(".test");
+        
+        //shrd = getBuiltDiscordClient("NDI2MTkzMjMxNTU5MTMxMTY2.DZSrxg.aAy4spfZItLZtwn3-N7ISD2SMyo");
+        
+        try {
+            List aList = cli.getGuilds();
+            for (int i = 0; i < aList.size(); i++) {
+                Guild guild = (Guild) aList.get(i);
+                long id = (long) guild.getLongID();
+                displayText.append("Guild:" + id + "\n");
+            }
+        
+        
+        List iUsers = cli.getUsers();String logInName = username.getText().trim();
+        
+        for(int i = 0;i<iUsers.size();i++){
+            IUser user = (User) iUsers.get(i);
+            if(logInName.matches(user.getName())) { flag = true; }
             long id = (long) user.getLongID();
             String name = user.getName();
-            
             
             displayText.append("User:" + id + " : " + name + "\n");
         }
@@ -180,10 +256,41 @@ public class start extends javax.swing.JFrame {
             displayText.append("Message:" + iM + " : " + content + "\n");
         }
         
-        
-        
+        } catch (NullPointerException e) {
+            System.out.println("Null nay its NOT");
+        }
+        if (flag) { 
+            displayText.setForeground(green);displayText.append("Username ok!"); 
+        } else {
+            displayText.setForeground(red);displayText.append("Username does not exist!");
+        }
+        displayText.setForeground(text);
     }//GEN-LAST:event_getButActionPerformed
 
+    
+    static IDiscordClient getBuiltDiscordClient(String token){
+
+        // The ClientBuilder object is where you will attach your params for configuring the instance of your bot.
+        // Such as withToken, setDaemon etc
+        return new ClientBuilder()
+                .withToken(token)
+                .withRecommendedShardCount()
+                .build();
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -214,8 +321,7 @@ public class start extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             
-            
-            
+           
             public void run() {
                  
                 
@@ -239,8 +345,13 @@ public class start extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea displayText;
     private javax.swing.JButton getBut;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton loginBut;
     private javax.swing.JTextField statusLabel;
+    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
