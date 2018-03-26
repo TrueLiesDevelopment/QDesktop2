@@ -85,38 +85,33 @@ public class start extends javax.swing.JFrame{
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         loadPane = new javax.swing.JPanel();
-        loginBut = new javax.swing.JButton();
-        getBut = new javax.swing.JButton();
+        loadTables = new javax.swing.JButton();
         loadPanel = new javax.swing.JScrollPane();
         displayText = new javax.swing.JTextArea();
-        username = new javax.swing.JTextField();
-        usernameLabel = new javax.swing.JLabel();
         mssagesScroll = new javax.swing.JScrollPane();
         messageDisplay = new javax.swing.JTable();
         guildCombo = new javax.swing.JComboBox<>();
         guildLabel = new javax.swing.JLabel();
         channelLabel = new javax.swing.JLabel();
         channelCombo = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        loginBut = new javax.swing.JButton();
+        username = new javax.swing.JTextField();
         QPostPane = new javax.swing.JPanel();
         QPostSroll = new javax.swing.JScrollPane();
         qPostList = new javax.swing.JTable();
+        usernameLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTabbedPane1.setToolTipText("First step");
 
-        loginBut.setText("Log In");
-        loginBut.addActionListener(new java.awt.event.ActionListener() {
+        loadTables.setText("Load Tables");
+        loadTables.setEnabled(false);
+        loadTables.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginButActionPerformed(evt);
-            }
-        });
-
-        getBut.setText("Load Tables");
-        getBut.setEnabled(false);
-        getBut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                getButActionPerformed(evt);
+                loadTablesActionPerformed(evt);
             }
         });
 
@@ -124,19 +119,11 @@ public class start extends javax.swing.JFrame{
         displayText.setRows(5);
         loadPanel.setViewportView(displayText);
 
-        username.setText("MrScabby");
-        username.setToolTipText("Enter your online Username");
-
-        usernameLabel.setText("Username");
-
         mssagesScroll.setEnabled(false);
 
         messageDisplay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
@@ -157,66 +144,108 @@ public class start extends javax.swing.JFrame{
 
         channelCombo.setEnabled(false);
 
+        jPanel1.setBackground(new java.awt.Color(47, 49, 54));
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        jLabel1.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
+        jLabel1.setText("Connect");
+
+        loginBut.setText("Log In");
+        loginBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButActionPerformed(evt);
+            }
+        });
+
+        username.setText("MrScabby");
+        username.setToolTipText("Enter your online Username");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(259, 259, 259))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(loginBut, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(13, 13, 13))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(loginBut)
+                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout loadPaneLayout = new javax.swing.GroupLayout(loadPane);
         loadPane.setLayout(loadPaneLayout);
         loadPaneLayout.setHorizontalGroup(
             loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loadPaneLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
                 .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(loadPaneLayout.createSequentialGroup()
-                        .addComponent(loadPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loadPaneLayout.createSequentialGroup()
-                        .addComponent(loginBut, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(loadPaneLayout.createSequentialGroup()
-                                .addComponent(usernameLabel)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loadPaneLayout.createSequentialGroup()
                                 .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(loadPaneLayout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(channelLabel))
+                                        .addComponent(guildLabel))
                                     .addGroup(loadPaneLayout.createSequentialGroup()
-                                        .addComponent(username)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(guildLabel)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(channelLabel)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(getBut, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                                    .addComponent(guildCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(channelCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(18, 18, 18)))
+                                    .addComponent(guildCombo, 0, 132, Short.MAX_VALUE)
+                                    .addComponent(channelCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(loadPaneLayout.createSequentialGroup()
+                                .addGap(0, 52, Short.MAX_VALUE)
+                                .addComponent(loadTables, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(loadPaneLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(loadPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(mssagesScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         loadPaneLayout.setVerticalGroup(
             loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loadPaneLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(usernameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(41, 41, 41)
                 .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mssagesScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
                     .addGroup(loadPaneLayout.createSequentialGroup()
-                        .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(loginBut)
-                            .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(guildLabel))
-                        .addGap(4, 4, 4)
-                        .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(channelLabel))
-                        .addGap(85, 85, 85)
-                        .addComponent(getBut)
+                        .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(loadPaneLayout.createSequentialGroup()
+                                .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(guildLabel))
+                                .addGap(7, 7, 7)
+                                .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(channelLabel)))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(122, 122, 122)
+                        .addComponent(loadTables)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(loadPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(mssagesScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE))
+                        .addComponent(loadPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18))
         );
 
-        jTabbedPane1.addTab("Lock and Load", loadPane);
+        jTabbedPane1.addTab("Members Posts", loadPane);
 
         qPostList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -250,19 +279,28 @@ public class start extends javax.swing.JFrame{
 
         jTabbedPane1.addTab("Take Aim", QPostPane);
 
+        usernameLabel.setText("Username");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(272, 272, 272)
+                        .addComponent(usernameLabel)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addGap(31, 31, 31)
+                .addComponent(usernameLabel)
+                .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(48, Short.MAX_VALUE))
         );
@@ -270,48 +308,55 @@ public class start extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadTablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadTablesActionPerformed
+
+        String aString = channelCombo.getSelectedItem().toString();
+        System.out.println("Selected=" + aString);
+        List channels = cli.getChannels(); 
+        for(int i = 0;i<channels.size();i++){
+            IChannel aChan = (IChannel) channels.get(i);
+            if (aChan.getName().equalsIgnoreCase(aString)) { selectedChannel = aChan; }
+        }
+        
+        messagesList = selectedChannel.getMessageHistory(1000);
+
+        mModel = (DefaultTableModel) new DefaultTableModel();
+        setupMessagesTable(mModel);
+
+        for (int i = 0; i<messagesList.size(); i++ ) {
+            IMessage m = (IMessage) messagesList.get(i);
+            insertRow(m,messageDisplay);
+        }
+    }//GEN-LAST:event_loadTablesActionPerformed
+
     private void loginButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButActionPerformed
 
         String loginButStatus = loginBut.getText();
-        
+
         if(loginButStatus.length()<1) { return; }
-        
-            cli = null;
-        
-            cli = BotUtils.getBuiltDiscordClient("NDI2NDU4OTAzODgzMDIyMzU2.DZWXBg.GqluTwQt5yJvVoQZPFuklaksbsw");
 
-            cli.getDispatcher().registerListener(new IListener<MessageReceivedEvent>() {
-                public void handle(MessageReceivedEvent event) {
-                    if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "test"))
-                        BotUtils.sendMessage(event.getChannel(), "I am sending a message from an IListener listener");
-                }
-            });
-        
-            cli.getDispatcher().registerListener(new MyEvents());
-        
-            cli.login();
-            
-            switchOnOff("on");
-        
-            while (cli.getGuilds().size()<1) { }                   // wait till confirmed login
+        cli = null;
 
-            checkUserData();                          // combo population
-            populateChannelsCombo("");
-    
-    }//GEN-LAST:event_loginButActionPerformed
+        cli = BotUtils.getBuiltDiscordClient("NDI2NDU4OTAzODgzMDIyMzU2.DZWXBg.GqluTwQt5yJvVoQZPFuklaksbsw");
 
-    private void getButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getButActionPerformed
-        
-        messagesList = selectedChannel.getMessageHistory(5000);
-        mModel = (DefaultTableModel) messageDisplay.getModel();
-        
-        for (int i = 0; i<mModel.getRowCount(); i++) { mModel.removeRow(0);} messageDisplay.setModel(mModel);
-        
-            for (int i = 0; i<messagesList.size(); i++ ) {
-                IMessage m = (IMessage) messagesList.get(i);
-                insertRow(m,messageDisplay);
+        cli.getDispatcher().registerListener(new IListener<MessageReceivedEvent>() {
+            public void handle(MessageReceivedEvent event) {
+                if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "test"))
+                BotUtils.sendMessage(event.getChannel(), "I am sending a message from an IListener listener");
             }
-    }//GEN-LAST:event_getButActionPerformed
+        });
+
+        cli.getDispatcher().registerListener(new MyEvents());
+
+        cli.login();
+
+        switchOnOff("on");
+
+        while (cli.getGuilds().size()<1) { }        // wait till confirmed login\
+
+        checkUserData();                          // combo population
+        populateChannelsCombo("");
+    }//GEN-LAST:event_loginButActionPerformed
 
     private void checkUserData(){
 
@@ -347,9 +392,10 @@ public class start extends javax.swing.JFrame{
     private void insertRow(IMessage o, JTable j){
         
         mModel = (DefaultTableModel) j.getModel();
-        mModel.addRow(new Object[]{false, o.getAuthor().getName(), o.getTimestamp().toString(), o.getContent()});
-        j.setModel(mModel);
         
+        mModel.insertRow(mModel.getRowCount(), new Object[] { false, o.getAuthor().getName(), o.getTimestamp().toString(), o.getContent() });
+        
+        j.setModel(mModel);
     }
     
     private void insertCombo(String line, JComboBox combo){
@@ -361,19 +407,8 @@ public class start extends javax.swing.JFrame{
     private void setupTables(){
         
         mModel = (DefaultTableModel) messageDisplay.getModel();
-        
-        String[] columns={"inc", "User", "Date", "Comment"};
-        mModel.setColumnIdentifiers(columns);
-        
+        setupMessagesTable(mModel);
         messageDisplay.setModel(mModel);
-        
-        TableColumnModel columnModel = messageDisplay.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(30);
-        columnModel.getColumn(1).setPreferredWidth(120);
-        columnModel.getColumn(2).setPreferredWidth(190);
-        columnModel.getColumn(3).setPreferredWidth(350);
-        
-        messageDisplay.setColumnModel(columnModel);
         
         qModel = (DefaultTableModel) qPostList.getModel();
         
@@ -396,7 +431,7 @@ public class start extends javax.swing.JFrame{
         if (type.endsWith("on")){
             mssagesScroll.setEnabled(true);
             messageDisplay.setEnabled(true);
-            getBut.setEnabled(true);
+            loadTables.setEnabled(true);
             guildCombo.setEnabled(true);
             channelCombo.setEnabled(true);
             channelLabel.setEnabled(true);
@@ -404,7 +439,7 @@ public class start extends javax.swing.JFrame{
         } else {
             mssagesScroll.setEnabled(false);
             messageDisplay.setEnabled(false);
-            getBut.setEnabled(false);
+            loadTables.setEnabled(false);
             guildCombo.setEnabled(true);
             channelCombo.setEnabled(true);
             channelLabel.setEnabled(true);
@@ -412,7 +447,21 @@ public class start extends javax.swing.JFrame{
         }
     }
     
-    
+    private DefaultTableModel setupMessagesTable(DefaultTableModel mM){
+        mModel = mM;
+        Object[] columnNames = {"inc", "User", "Date", "Content"};
+        Object[][] data = { {false, "IBM", new Integer(1000), "test"} };
+        mModel = new DefaultTableModel(data, columnNames);
+        messageDisplay.setModel(mModel);
+        
+        TableColumnModel columnModel = messageDisplay.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(30);
+        columnModel.getColumn(1).setPreferredWidth(120);
+        columnModel.getColumn(2).setPreferredWidth(190);
+        columnModel.getColumn(3).setPreferredWidth(350);
+        messageDisplay.setColumnModel(columnModel);
+        return mModel;
+    }
     
     private void listeners() {
 
@@ -511,12 +560,14 @@ public class start extends javax.swing.JFrame{
     private javax.swing.JComboBox<String> channelCombo;
     private javax.swing.JLabel channelLabel;
     private javax.swing.JTextArea displayText;
-    private javax.swing.JButton getBut;
     private javax.swing.JComboBox<String> guildCombo;
     private javax.swing.JLabel guildLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel loadPane;
     private javax.swing.JScrollPane loadPanel;
+    private javax.swing.JButton loadTables;
     private javax.swing.JButton loginBut;
     private javax.swing.JTable messageDisplay;
     private javax.swing.JScrollPane mssagesScroll;
