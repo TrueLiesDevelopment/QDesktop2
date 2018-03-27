@@ -107,6 +107,8 @@ public class start extends javax.swing.JFrame{
         wordSearch = new javax.swing.JTextField();
         wordSearchBut = new javax.swing.JButton();
         wordSearch1 = new javax.swing.JTextField();
+        exTextOnly1 = new javax.swing.JCheckBox();
+        exTextOnly2 = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         loginBut = new javax.swing.JButton();
@@ -172,6 +174,12 @@ public class start extends javax.swing.JFrame{
             }
         });
 
+        exTextOnly1.setBackground(new java.awt.Color(47, 49, 54));
+        exTextOnly1.setText("containing this term");
+
+        exTextOnly2.setBackground(new java.awt.Color(47, 49, 54));
+        exTextOnly2.setText("from this date");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -184,16 +192,22 @@ public class start extends javax.swing.JFrame{
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(exTextOnly, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(guildCombo, 0, 200, Short.MAX_VALUE)
-                                    .addComponent(guildLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(channelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(channelCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(wordSearch)
-                                    .addComponent(wordSearch1))
-                                .addComponent(wordSearchBut)
-                                .addComponent(dateChooser)
-                                .addComponent(loadTables, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(loadTables, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(exTextOnly1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(wordSearchBut)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(exTextOnly2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(dateChooser)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(guildCombo, 0, 200, Short.MAX_VALUE)
+                                                    .addComponent(guildLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(channelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(channelCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(wordSearch)
+                                                    .addComponent(wordSearch1))))))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -216,13 +230,17 @@ public class start extends javax.swing.JFrame{
                 .addComponent(loadTables)
                 .addGap(34, 34, 34)
                 .addComponent(wordSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exTextOnly1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(wordSearchBut)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(wordSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exTextOnly2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dateChooser)
-                .addGap(14, 14, 14))
+                .addGap(19, 19, 19))
         );
 
         jPanel1.setBackground(new java.awt.Color(47, 49, 54));
@@ -287,7 +305,7 @@ public class start extends javax.swing.JFrame{
                 .addGap(17, 17, 17)
                 .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mssagesScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE))
+                    .addComponent(mssagesScroll))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -658,6 +676,8 @@ public class start extends javax.swing.JFrame{
     private javax.swing.JButton dateChooser;
     private datechooser.beans.DateChooserDialog dateChooserDialog1;
     private javax.swing.JCheckBox exTextOnly;
+    private javax.swing.JCheckBox exTextOnly1;
+    private javax.swing.JCheckBox exTextOnly2;
     private javax.swing.JComboBox<String> guildCombo;
     private javax.swing.JLabel guildLabel;
     private javax.swing.JLabel jLabel1;

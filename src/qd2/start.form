@@ -78,7 +78,7 @@
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel2" max="32767" attributes="0"/>
-                          <Component id="mssagesScroll" pref="493" max="32767" attributes="0"/>
+                          <Component id="mssagesScroll" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="24" max="32767" attributes="0"/>
                   </Group>
@@ -160,17 +160,27 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="exTextOnly" min="-2" pref="145" max="-2" attributes="0"/>
                                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                          <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="guildCombo" alignment="0" pref="200" max="32767" attributes="0"/>
-                                              <Component id="guildLabel" alignment="0" min="-2" pref="43" max="-2" attributes="0"/>
-                                              <Component id="channelLabel" alignment="0" min="-2" pref="57" max="-2" attributes="0"/>
-                                              <Component id="channelCombo" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="wordSearch" max="32767" attributes="0"/>
-                                              <Component id="wordSearch1" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Component id="wordSearchBut" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="dateChooser" alignment="1" min="-2" max="-2" attributes="0"/>
                                           <Component id="loadTables" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                              <Component id="exTextOnly1" min="-2" pref="145" max="-2" attributes="0"/>
+                                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                                  <Component id="wordSearchBut" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                                      <Component id="exTextOnly2" min="-2" pref="145" max="-2" attributes="0"/>
+                                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                                          <Component id="dateChooser" min="-2" max="-2" attributes="0"/>
+                                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                              <Component id="guildCombo" alignment="0" pref="200" max="32767" attributes="0"/>
+                                                              <Component id="guildLabel" alignment="0" min="-2" pref="43" max="-2" attributes="0"/>
+                                                              <Component id="channelLabel" alignment="0" min="-2" pref="57" max="-2" attributes="0"/>
+                                                              <Component id="channelCombo" alignment="0" max="32767" attributes="0"/>
+                                                              <Component id="wordSearch" max="32767" attributes="0"/>
+                                                              <Component id="wordSearch1" max="32767" attributes="0"/>
+                                                          </Group>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -199,13 +209,17 @@
                           <Component id="loadTables" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                           <Component id="wordSearch" min="-2" pref="29" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="exTextOnly1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="wordSearchBut" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="35" max="32767" attributes="0"/>
                           <Component id="wordSearch1" min="-2" pref="29" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="exTextOnly2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="dateChooser" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -290,6 +304,22 @@
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="wordSearch1">
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="exTextOnly1">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="36" green="31" red="2f" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="containing this term"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="exTextOnly2">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="36" green="31" red="2f" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="from this date"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
