@@ -113,6 +113,16 @@ public class start extends javax.swing.JFrame{
         jLabel1 = new javax.swing.JLabel();
         loginBut = new javax.swing.JButton();
         username = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        authorLabel = new javax.swing.JLabel();
+        authorEdit = new javax.swing.JTextField();
+        dateLabel1 = new javax.swing.JLabel();
+        dateEdit1 = new javax.swing.JTextField();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
+        fMessageScrool = new javax.swing.JScrollPane();
+        fMessageDisplay = new javax.swing.JTextPane();
         QPostPane = new javax.swing.JPanel();
         QPostSroll = new javax.swing.JScrollPane();
         qPostList = new javax.swing.JTable();
@@ -234,7 +244,7 @@ public class start extends javax.swing.JFrame{
                 .addComponent(exTextOnly1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(wordSearchBut)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(wordSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exTextOnly2)
@@ -283,6 +293,78 @@ public class start extends javax.swing.JFrame{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(new java.awt.Color(47, 49, 54));
+
+        authorLabel.setText("Author:");
+
+        dateLabel1.setText("Date:");
+
+        jCheckBox1.setBackground(new java.awt.Color(47, 49, 54));
+        jCheckBox1.setText("Embed");
+
+        jCheckBox2.setBackground(new java.awt.Color(47, 49, 54));
+        jCheckBox2.setText("Attachment");
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Icon");
+        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(185, 193, 188)));
+
+        fMessageDisplay.setBackground(new java.awt.Color(0, 0, 0));
+        fMessageScrool.setViewportView(fMessageDisplay);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fMessageScrool, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(dateEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(dateLabel1)
+                                    .addComponent(authorLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(authorEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(jCheckBox1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jCheckBox2)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(authorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(authorEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dateLabel1)
+                            .addComponent(dateEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jCheckBox1)
+                            .addComponent(jCheckBox2)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fMessageScrool, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout loadPaneLayout = new javax.swing.GroupLayout(loadPane);
         loadPane.setLayout(loadPaneLayout);
         loadPaneLayout.setHorizontalGroup(
@@ -294,19 +376,22 @@ public class start extends javax.swing.JFrame{
                     .addGroup(loadPaneLayout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addComponent(mssagesScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(455, Short.MAX_VALUE))
+                        .addComponent(mssagesScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         loadPaneLayout.setVerticalGroup(
             loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loadPaneLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
+                .addGap(13, 13, 13)
                 .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mssagesScroll))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(mssagesScroll)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Members Posts", loadPane);
@@ -448,8 +533,10 @@ public class start extends javax.swing.JFrame{
                     " " + m.getTimestamp();
             if(text.contains(word)) { refinedMessageList.add(m); }
         }
-        messagesList = refinedMessageList;
+        messagesList = null; messagesList = refinedMessageList;
         
+        if(messagesList!=null){
+        setupMessagesTable();
         boolean hasEmbed = false, hasAttachment = false;
         for (int i = 0; i<messagesList.size(); i++ ) {
             IMessage m = (IMessage) messagesList.get(i);
@@ -459,8 +546,9 @@ public class start extends javax.swing.JFrame{
             if(exTextOnly.isSelected() && (hasEmbed || hasAttachment)) { insertRow(m,messageDisplay); } else {
                 if(!exTextOnly.isSelected()) {  insertRow(m,messageDisplay); }
             }
-            
-        }
+            }
+        } else { setupMessagesTable(); }
+        
     }//GEN-LAST:event_wordSearchButActionPerformed
 
     private void checkUserData(){
@@ -671,20 +759,30 @@ public class start extends javax.swing.JFrame{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel QPostPane;
     private javax.swing.JScrollPane QPostSroll;
+    private javax.swing.JTextField authorEdit;
+    private javax.swing.JLabel authorLabel;
     private javax.swing.JComboBox<String> channelCombo;
     private javax.swing.JLabel channelLabel;
     private javax.swing.JButton dateChooser;
     private datechooser.beans.DateChooserDialog dateChooserDialog1;
+    private javax.swing.JTextField dateEdit1;
+    private javax.swing.JLabel dateLabel1;
     private javax.swing.JCheckBox exTextOnly;
     private javax.swing.JCheckBox exTextOnly1;
     private javax.swing.JCheckBox exTextOnly2;
+    private javax.swing.JTextPane fMessageDisplay;
+    private javax.swing.JScrollPane fMessageScrool;
     private javax.swing.JComboBox<String> guildCombo;
     private javax.swing.JLabel guildLabel;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel loadPane;
     private javax.swing.JButton loadTables;
