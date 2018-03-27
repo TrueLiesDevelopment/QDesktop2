@@ -49,10 +49,12 @@ public class start extends javax.swing.JFrame{
     public Color amber = new Color(0xFAA61A);
     public Color green = new Color(0x43B581);
     public Color red = new Color(0xF04747);
+    public Color lines = new Color(0x484B51);
     public Color text = new Color(0xBBBBA9);
     public Color darkBlue = new Color(0x2F3136);
+    public Color text2 = new Color(0xB9C1BC);
     
-    public List channelsList=null, messagesList=null, guildsList=null, usersList=null;
+    public List channelsList=null, messagesList=null, guildsList=null, usersList=null, refinedMessageList=null;
     private DefaultTableModel mModel;
     private DefaultTableModel qModel;
     public ArrayList<String> guildComboReply = null;
@@ -70,7 +72,7 @@ public class start extends javax.swing.JFrame{
         
         initComponents();
         
-        
+        mssagesScroll.getViewport().setBackground(darkBlue);
         
         
         setupTables();
@@ -93,10 +95,6 @@ public class start extends javax.swing.JFrame{
         loadPane = new javax.swing.JPanel();
         mssagesScroll = new javax.swing.JScrollPane();
         messageDisplay = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        loginBut = new javax.swing.JButton();
-        username = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         guildLabel = new javax.swing.JLabel();
@@ -106,7 +104,13 @@ public class start extends javax.swing.JFrame{
         exTextOnly = new javax.swing.JCheckBox();
         loadTables = new javax.swing.JButton();
         dateChooser = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        wordSearch = new javax.swing.JTextField();
+        wordSearchBut = new javax.swing.JButton();
+        wordSearch1 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        loginBut = new javax.swing.JButton();
+        username = new javax.swing.JTextField();
         QPostPane = new javax.swing.JPanel();
         QPostSroll = new javax.swing.JScrollPane();
         qPostList = new javax.swing.JTable();
@@ -122,9 +126,104 @@ public class start extends javax.swing.JFrame{
         mssagesScroll.setEnabled(false);
 
         messageDisplay.setBackground(new java.awt.Color(47, 49, 54));
-        messageDisplay.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         messageDisplay.setEnabled(false);
         mssagesScroll.setViewportView(messageDisplay);
+
+        jPanel2.setBackground(new java.awt.Color(47, 49, 54));
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel2.setEnabled(false);
+
+        jLabel2.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 20)); // NOI18N
+        jLabel2.setText("Search for content...");
+
+        guildLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        guildLabel.setText("Guild");
+        guildLabel.setEnabled(false);
+
+        channelLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        channelLabel.setText("Channel");
+        channelLabel.setEnabled(false);
+
+        channelCombo.setEnabled(false);
+
+        guildCombo.setEnabled(false);
+
+        exTextOnly.setBackground(new java.awt.Color(47, 49, 54));
+        exTextOnly.setText("exc text only posts");
+
+        loadTables.setText("Load Tables");
+        loadTables.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadTablesActionPerformed(evt);
+            }
+        });
+
+        dateChooser.setText("Choose Date");
+        dateChooser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateChooserActionPerformed(evt);
+            }
+        });
+
+        wordSearchBut.setText("Word Search");
+        wordSearchBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordSearchButActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(exTextOnly, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(guildCombo, 0, 200, Short.MAX_VALUE)
+                                    .addComponent(guildLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(channelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(channelCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(wordSearch)
+                                    .addComponent(wordSearch1))
+                                .addComponent(wordSearchBut)
+                                .addComponent(dateChooser)
+                                .addComponent(loadTables, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(guildLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(channelLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exTextOnly)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(loadTables)
+                .addGap(34, 34, 34)
+                .addComponent(wordSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(wordSearchBut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(wordSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(dateChooser)
+                .addGap(14, 14, 14))
+        );
 
         jPanel1.setBackground(new java.awt.Color(47, 49, 54));
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -148,124 +247,22 @@ public class start extends javax.swing.JFrame{
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(194, 194, 194))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(loginBut, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(loginBut, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(loginBut, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBackground(new java.awt.Color(47, 49, 54));
-        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.setEnabled(false);
-
-        jLabel2.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 20)); // NOI18N
-        jLabel2.setText("Search for content...");
-
-        guildLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        guildLabel.setText("Guild");
-        guildLabel.setEnabled(false);
-
-        channelLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        channelLabel.setText("Channel");
-        channelLabel.setEnabled(false);
-
-        channelCombo.setEnabled(false);
-
-        guildCombo.setEnabled(false);
-
-        exTextOnly.setText("exc text only");
-
-        loadTables.setText("Load Tables");
-        loadTables.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadTablesActionPerformed(evt);
-            }
-        });
-
-        dateChooser.setText("Choose Date");
-        dateChooser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dateChooserActionPerformed(evt);
-            }
-        });
-
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setEnabled(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(294, 294, 294))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(guildLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(channelLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(guildCombo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(channelCombo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(loadTables, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(exTextOnly, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(12, 12, 12)
-                .addComponent(guildLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(channelLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(exTextOnly)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(loadTables, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-                .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(loginBut, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout loadPaneLayout = new javax.swing.GroupLayout(loadPane);
@@ -274,24 +271,24 @@ public class start extends javax.swing.JFrame{
             loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loadPaneLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(mssagesScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(loadPaneLayout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(mssagesScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(455, Short.MAX_VALUE))
         );
         loadPaneLayout.setVerticalGroup(
             loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loadPaneLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
                 .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(mssagesScroll)
-                    .addGroup(loadPaneLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mssagesScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Members Posts", loadPane);
@@ -336,11 +333,11 @@ public class start extends javax.swing.JFrame{
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1420, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1420, 700));
@@ -359,8 +356,7 @@ public class start extends javax.swing.JFrame{
         }
         
         messagesList = selectedChannel.getMessageHistory(1000);
-        mModel = (DefaultTableModel) new DefaultTableModel();
-        setupMessagesTable(mModel);
+        setupMessagesTable();
         boolean hasEmbed = false, hasAttachment = false;
         for (int i = 0; i<messagesList.size(); i++ ) {
             IMessage m = (IMessage) messagesList.get(i);
@@ -408,9 +404,46 @@ public class start extends javax.swing.JFrame{
         p.showDialog(this);
     }//GEN-LAST:event_dateChooserActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void wordSearchButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordSearchButActionPerformed
+        
+        String word = wordSearch.getText();
+        if (word.length()<1) { return; }
+        
+        messagesList = null;
+        List channels = cli.getChannels();
+        if(channels.size()<1) { return; }
+        for(int i = 0;i<channels.size();i++) {
+            IChannel channel = (IChannel) channels.get(i);
+            String channelComboSelection = channelCombo.getSelectedItem().toString();
+            if(channel.getName().equalsIgnoreCase(channelComboSelection)){
+                messagesList = channel.getMessageHistory(1000);
+            }
+        }
+        
+        for(int i = 0;i<messagesList.size();i++){
+            boolean match = false;
+            IMessage m = (IMessage) messagesList.get(i);
+            String text = m.getContent() + 
+                    " " + m.getAuthor() + 
+                    " " + m.getCreationDate() + 
+                    " " + m.getMentions() + 
+                    " " + m.getTimestamp();
+            if(text.contains(word)) { refinedMessageList.add(m); }
+        }
+        messagesList = refinedMessageList;
+        
+        boolean hasEmbed = false, hasAttachment = false;
+        for (int i = 0; i<messagesList.size(); i++ ) {
+            IMessage m = (IMessage) messagesList.get(i);
+            if(m.getEmbeds().size()>0) { hasEmbed = true; } else { hasEmbed = false; }
+            if(m.getAttachments().size()>0) { hasAttachment = true; } else { hasAttachment = false; }
+            
+            if(exTextOnly.isSelected() && (hasEmbed || hasAttachment)) { insertRow(m,messageDisplay); } else {
+                if(!exTextOnly.isSelected()) {  insertRow(m,messageDisplay); }
+            }
+            
+        }
+    }//GEN-LAST:event_wordSearchButActionPerformed
 
     private void checkUserData(){
 
@@ -461,7 +494,8 @@ public class start extends javax.swing.JFrame{
     private void setupTables(){
         
         mModel = (DefaultTableModel) messageDisplay.getModel();
-        setupMessagesTable(mModel);
+        setupMessagesTable();
+        
         messageDisplay.setModel(mModel);
         
         qModel = (DefaultTableModel) qPostList.getModel();
@@ -499,22 +533,24 @@ public class start extends javax.swing.JFrame{
             channelLabel.setEnabled(true);
             guildLabel.setEnabled(true);
         }
-    }
+    }       //redundent
     
-    private DefaultTableModel setupMessagesTable(DefaultTableModel mM){
-        mModel = mM;
+    private DefaultTableModel setupMessagesTable(){
+        
         Object[] columnNames = {"inc", "User", "Date", "Content"};
         Object[][] data = { {} };
+        
         mModel = new DefaultTableModel(data, columnNames);
         JTableHeader header = messageDisplay.getTableHeader();
         header.setBackground(darkBlue);
         header.setForeground(text);
+        messageDisplay.setGridColor(lines);
+        messageDisplay.setRowHeight(20);
         
         messageDisplay.setModel(mModel);
-        messageDisplay.setBackground(darkBlue);
         
         TableColumnModel columnModel = messageDisplay.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(30);
+        columnModel.getColumn(0).setPreferredWidth(50);
         columnModel.getColumn(1).setPreferredWidth(120);
         columnModel.getColumn(2).setPreferredWidth(190);
         columnModel.getColumn(3).setPreferredWidth(350);
@@ -630,7 +666,6 @@ public class start extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel loadPane;
     private javax.swing.JButton loadTables;
     private javax.swing.JButton loginBut;
@@ -642,5 +677,8 @@ public class start extends javax.swing.JFrame{
     private java.awt.Panel panel4;
     private javax.swing.JTable qPostList;
     private javax.swing.JTextField username;
+    private javax.swing.JTextField wordSearch;
+    private javax.swing.JTextField wordSearch1;
+    private javax.swing.JButton wordSearchBut;
     // End of variables declaration//GEN-END:variables
 }
