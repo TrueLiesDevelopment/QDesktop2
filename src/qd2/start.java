@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -81,7 +82,8 @@ public class start extends javax.swing.JFrame{
         initComponents();
         
         mssagesScroll.getViewport().setBackground(darkBlue);
-        
+        messageDisplay.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        messageDisplay.setDefaultEditor(Object.class, null);
         
         setupTables();
         listeners();                               // add table & combo listeners
@@ -138,6 +140,9 @@ public class start extends javax.swing.JFrame{
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        logInBut1 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         QPostPane = new javax.swing.JPanel();
         QPostSroll = new javax.swing.JScrollPane();
         qPostList = new javax.swing.JTable();
@@ -159,7 +164,6 @@ public class start extends javax.swing.JFrame{
 
         searchControls.setBackground(new java.awt.Color(47, 49, 54));
         searchControls.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        searchControls.setEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(185, 193, 188));
@@ -328,7 +332,7 @@ public class start extends javax.swing.JFrame{
             .addComponent(incDate)
             .addGap(33, 33, 33)
             .addComponent(loadTables)
-            .addContainerGap(10, Short.MAX_VALUE))
+            .addContainerGap(19, Short.MAX_VALUE))
     );
 
     jPanel1.setBackground(new java.awt.Color(47, 49, 54));
@@ -501,14 +505,57 @@ public class start extends javax.swing.JFrame{
 
     jTabbedPane1.addTab("Q Folder", jPanel2);
 
+    jPanel3.setBackground(new java.awt.Color(47, 49, 54));
+    jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+    logInBut1.setText("Add Selected");
+    logInBut1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            logInBut1ActionPerformed(evt);
+        }
+    });
+
+    jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel8.setText("Items in Q Folder");
+
+    javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+    jPanel3.setLayout(jPanel3Layout);
+    jPanel3Layout.setHorizontalGroup(
+        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel3Layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(logInBut1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(127, 127, 127)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE)))
+    );
+    jPanel3Layout.setVerticalGroup(
+        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel3Layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(logInBut1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel8)
+                .addContainerGap(11, Short.MAX_VALUE)))
+    );
+
     javax.swing.GroupLayout loadPaneLayout = new javax.swing.GroupLayout(loadPane);
     loadPane.setLayout(loadPaneLayout);
     loadPaneLayout.setHorizontalGroup(
         loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(loadPaneLayout.createSequentialGroup()
             .addGap(30, 30, 30)
-            .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(loadPaneLayout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(loadPaneLayout.createSequentialGroup()
                     .addComponent(searchControls, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(26, 26, 26)
@@ -524,12 +571,14 @@ public class start extends javax.swing.JFrame{
         loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(loadPaneLayout.createSequentialGroup()
             .addGap(26, 26, 26)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(31, 31, 31)
             .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(mssagesScroll, javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(searchControls, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(30, 30, 30)
+            .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(mssagesScroll)
+                .addComponent(searchControls, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(18, Short.MAX_VALUE))
         .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loadPaneLayout.createSequentialGroup()
                 .addContainerGap(76, Short.MAX_VALUE)
@@ -616,18 +665,11 @@ public class start extends javax.swing.JFrame{
                                                                                     // else grab last 1000
         setupMessagesTable();
         
-        boolean hasEmbed = false, hasAttachment = false;                            // begin refining the list
-        
-        for (int i = 0; i<messagesList.size(); i++ ) {
-            IMessage m = (IMessage) messagesList.get(i);                            // if embed or attachment flag them
-            if(m.getEmbeds().size()>0) { hasEmbed = true; } else { hasEmbed = false; }
-            if(m.getAttachments().size()>0) { hasAttachment = true; } else { hasAttachment = false; }
+        String word = wordSearch.getText();String text="";refinedMessageList.clear();
+        if (word.length()<1) { incTerm.setSelected(false); }
             
-            String word = wordSearch.getText();String text="";
-            if (word.length()<1) { incTerm.setSelected(false); }
-        
-            if (incTerm.isSelected()){
-                for(int ip = 0;i<messagesList.size();i++){
+        if (incTerm.isSelected()){
+                for(int ip = 0;ip<messagesList.size();ip++){
                     IMessage mp = (IMessage) messagesList.get(ip);
                     
                     text = mp.getContent() +
@@ -640,7 +682,15 @@ public class start extends javax.swing.JFrame{
                 }
                 messagesList = refinedMessageList;
             }
+        
+        boolean hasEmbed = false, hasAttachment = false;                            // begin refining the list
+        
+        for (int i = 0; i<messagesList.size(); i++ ) {
+            IMessage m = (IMessage) messagesList.get(i);                            // if embed or attachment flag them
+            if(m.getEmbeds().size()>0) { hasEmbed = true; } else { hasEmbed = false; }
+            if(m.getAttachments().size()>0) { hasAttachment = true; } else { hasAttachment = false; }
             
+
             if(exTextOnly.isSelected() && (hasEmbed || hasAttachment)) { insertRow(m,messageDisplay); } else {
                 if(incTerm.isSelected()) { insertRow(m,messageDisplay); } else {
                     if(!exTextOnly.isSelected()) {  insertRow(m,messageDisplay); }
@@ -681,6 +731,10 @@ public class start extends javax.swing.JFrame{
         selectedDate = dateChooserCombo1.getSelectedPeriodSet().getFirstDate().toInstant();
         dateSearch.setText(selectedDate.toString()); incDate.setSelected(true);
     }//GEN-LAST:event_dateChooserCombo1OnSelectionChange
+
+    private void logInBut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInBut1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logInBut1ActionPerformed
 
     private void checkUserData(){
 
@@ -920,13 +974,16 @@ public class start extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel loadPane;
     private javax.swing.JButton loadTables;
     private javax.swing.JButton logInBut;
+    private javax.swing.JButton logInBut1;
     private javax.swing.JTable messageDisplay;
     private javax.swing.JScrollPane mssagesScroll;
     private javax.swing.JTable qPostList;
