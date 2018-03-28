@@ -115,10 +115,13 @@ public class start extends javax.swing.JFrame{
         incTerm = new javax.swing.JCheckBox();
         incDate = new javax.swing.JCheckBox();
         dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
         logInBut = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         authorLabel = new javax.swing.JLabel();
         authorEdit = new javax.swing.JTextField();
@@ -127,9 +130,14 @@ public class start extends javax.swing.JFrame{
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        authorLabel1 = new javax.swing.JLabel();
+        authorEdit1 = new javax.swing.JTextField();
         fMessageScrool = new javax.swing.JScrollPane();
         fMessageDisplay = new javax.swing.JTextPane();
-        dateLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         QPostPane = new javax.swing.JPanel();
         QPostSroll = new javax.swing.JScrollPane();
         qPostList = new javax.swing.JTable();
@@ -145,6 +153,7 @@ public class start extends javax.swing.JFrame{
         mssagesScroll.setEnabled(false);
 
         messageDisplay.setBackground(new java.awt.Color(47, 49, 54));
+        messageDisplay.setModel(new DefaultTableModel());
         messageDisplay.setEnabled(false);
         mssagesScroll.setViewportView(messageDisplay);
 
@@ -230,6 +239,9 @@ public class start extends javax.swing.JFrame{
                 false,
                 true)));
     dateChooserCombo1.setCalendarPreferredSize(new java.awt.Dimension(330, 250));
+    dateChooserCombo1.setNothingAllowed(false);
+    dateChooserCombo1.setFormat(0);
+    dateChooserCombo1.setFieldFont(new java.awt.Font("Arial Narrow", java.awt.Font.PLAIN, 14));
     dateChooserCombo1.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
     dateChooserCombo1.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
         public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
@@ -237,52 +249,60 @@ public class start extends javax.swing.JFrame{
         }
     });
 
+    jLabel4.setText("Search from a given date...");
+
+    jLabel5.setText("Search for a given term...");
+
     javax.swing.GroupLayout searchControlsLayout = new javax.swing.GroupLayout(searchControls);
     searchControls.setLayout(searchControlsLayout);
     searchControlsLayout.setHorizontalGroup(
         searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(searchControlsLayout.createSequentialGroup()
+            .addContainerGap()
             .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(searchControlsLayout.createSequentialGroup()
-                    .addGap(18, 18, 18)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                    .addContainerGap())
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(exTextOnly, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
                             .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-                                        .addComponent(channelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-                                        .addComponent(guildLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(incDate)
-                                    .addComponent(dateSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(incTerm)
-                                    .addComponent(wordSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(10, 10, 10)))))
-            .addContainerGap())
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addComponent(loadTables, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(47, 47, 47))
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(28, 28, 28))
+                                .addComponent(exTextOnly, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
+                                    .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(incDate)
+                                        .addComponent(dateSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(incTerm)
+                                        .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                                            .addComponent(wordSearch, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addGap(12, 12, 12)))
+                            .addContainerGap())
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
+                            .addComponent(loadTables, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(46, 46, 46))))))
+        .addGroup(searchControlsLayout.createSequentialGroup()
+            .addGap(14, 14, 14)
+            .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
+                    .addComponent(channelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
+                    .addComponent(guildLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(0, 0, Short.MAX_VALUE))
     );
     searchControlsLayout.setVerticalGroup(
         searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(searchControlsLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(jLabel2)
-            .addGap(18, 18, 18)
+            .addGap(24, 24, 24)
             .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(guildLabel))
@@ -290,21 +310,25 @@ public class start extends javax.swing.JFrame{
             .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(channelLabel))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(exTextOnly)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(loadTables)
-            .addGap(50, 50, 50)
+            .addGap(27, 27, 27)
+            .addComponent(jLabel5)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(wordSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(incTerm)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(32, 32, 32)
+            .addComponent(jLabel4)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(dateSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(incDate)
-            .addGap(20, 20, 20))
+            .addGap(33, 33, 33)
+            .addComponent(loadTables)
+            .addContainerGap(10, Short.MAX_VALUE))
     );
 
     jPanel1.setBackground(new java.awt.Color(47, 49, 54));
@@ -335,7 +359,7 @@ public class start extends javax.swing.JFrame{
             .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(logInBut, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
+            .addContainerGap(18, Short.MAX_VALUE))
     );
     jPanel1Layout.setVerticalGroup(
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,6 +372,8 @@ public class start extends javax.swing.JFrame{
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
+
+    jTabbedPane1.setBackground(new java.awt.Color(47, 49, 54));
 
     jPanel4.setBackground(new java.awt.Color(47, 49, 54));
 
@@ -367,68 +393,113 @@ public class start extends javax.swing.JFrame{
     jLabel3.setText("Icon");
     jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(185, 193, 188)));
 
+    jLabel6.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 20)); // NOI18N
+    jLabel6.setForeground(new java.awt.Color(185, 193, 188));
+    jLabel6.setText("Message details...");
+
+    authorLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    authorLabel1.setText(" ID:");
+
     fMessageDisplay.setBackground(new java.awt.Color(0, 0, 0));
     fMessageScrool.setViewportView(fMessageDisplay);
 
-    dateLabel2.setText("contains");
+    jButton1.setText("Add Message");
 
     javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
     jPanel4.setLayout(jPanel4Layout);
     jPanel4Layout.setHorizontalGroup(
         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-            .addGap(0, 29, Short.MAX_VALUE)
-            .addComponent(fMessageScrool, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(24, 24, 24))
         .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGap(17, 17, 17)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(authorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(authorEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                        .addComponent(dateEdit1))
-                    .addGap(29, 29, 29))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                    .addGap(28, 28, 28)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(52, 52, 52)
-                    .addComponent(dateLabel2)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jCheckBox1)
-                    .addGap(18, 18, 18)
-                    .addComponent(jCheckBox2)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(32, 32, 32))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(authorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dateLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(authorLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jCheckBox1)
+                            .addGap(18, 18, 18)
+                            .addComponent(jCheckBox2)
+                            .addGap(28, 28, 28)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(authorEdit)
+                            .addComponent(dateEdit1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                            .addComponent(authorEdit1)))))
+            .addGap(26, 26, 26))
+        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(fMessageScrool, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE)))
     );
     jPanel4Layout.setVerticalGroup(
         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGap(17, 17, 17)
+            .addComponent(jLabel6)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(authorLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(authorEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(11, 11, 11)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(authorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(authorEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(dateLabel1)
-                        .addComponent(dateEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jCheckBox1)
-                        .addComponent(jCheckBox2)
-                        .addComponent(dateLabel2))
-                    .addGap(15, 15, 15))
-                .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(32, 32, 32)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 23, Short.MAX_VALUE)))
-            .addComponent(fMessageScrool, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(25, 25, 25))
+                        .addComponent(dateLabel1)
+                        .addComponent(dateEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jButton1)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBox1)
+                    .addComponent(jCheckBox2)))
+            .addContainerGap(276, Short.MAX_VALUE))
+        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(230, Short.MAX_VALUE)
+                .addComponent(fMessageScrool, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE)))
     );
+
+    jTabbedPane1.addTab("Message View", jPanel4);
+
+    jPanel2.setBackground(new java.awt.Color(47, 49, 54));
+
+    jLabel7.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 20)); // NOI18N
+    jLabel7.setForeground(new java.awt.Color(185, 193, 188));
+    jLabel7.setText("Proof items...");
+
+    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+    jPanel2.setLayout(jPanel2Layout);
+    jPanel2Layout.setHorizontalGroup(
+        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGap(18, 18, 18)
+            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(278, Short.MAX_VALUE))
+    );
+    jPanel2Layout.setVerticalGroup(
+        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGap(17, 17, 17)
+            .addComponent(jLabel7)
+            .addContainerGap(435, Short.MAX_VALUE))
+    );
+
+    jTabbedPane1.addTab("Q Folder", jPanel2);
 
     javax.swing.GroupLayout loadPaneLayout = new javax.swing.GroupLayout(loadPane);
     loadPane.setLayout(loadPaneLayout);
@@ -441,22 +512,29 @@ public class start extends javax.swing.JFrame{
                 .addGroup(loadPaneLayout.createSequentialGroup()
                     .addComponent(searchControls, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(26, 26, 26)
-                    .addComponent(mssagesScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(mssagesScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(475, Short.MAX_VALUE))
+        .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loadPaneLayout.createSequentialGroup()
+                .addContainerGap(863, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE)))
     );
     loadPaneLayout.setVerticalGroup(
         loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(loadPaneLayout.createSequentialGroup()
-            .addGap(18, 18, 18)
+            .addGap(26, 26, 26)
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(13, 13, 13)
+            .addGap(31, 31, 31)
             .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(searchControls, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(mssagesScroll)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap(39, Short.MAX_VALUE))
+                .addComponent(mssagesScroll, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(searchControls, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(26, Short.MAX_VALUE))
+        .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loadPaneLayout.createSequentialGroup()
+                .addContainerGap(76, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE)))
     );
 
     MainPane.addTab("Members Posts", loadPane);
@@ -515,7 +593,13 @@ public class start extends javax.swing.JFrame{
 
     private void loadTablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadTablesActionPerformed
 
-        String aString = channelCombo.getSelectedItem().toString();
+        String aString = null;
+        try {
+            aString = channelCombo.getSelectedItem().toString();
+        } catch (Exception e) {
+            return;
+        }
+        
         if(aString.length()>0){
             List channels = cli.getChannels(); if(channels.size()<1) { return; } 
             for(int i = 0;i<channels.size();i++){
@@ -524,7 +608,7 @@ public class start extends javax.swing.JFrame{
                 
             }
         } else { return; }
-        
+        if(selectedDate!=null) {} else { incDate.setSelected(false); }
         if(incDate.isSelected() && selectedDate.toString().length()>0) {
             messagesList = selectedChannel.getMessageHistoryFrom(selectedDate, 1000);
             } else {
@@ -542,21 +626,23 @@ public class start extends javax.swing.JFrame{
             String word = wordSearch.getText();String text="";
             if (word.length()<1) { incTerm.setSelected(false); }
         
-            /*if (incTerm.isSelected()){
-            for(int ip = 0;i<messagesList.size();i++){
-            IMessage mp = (IMessage) messagesList.get(ip);
-            text = mp.getContent() +
-            " " + mp.getAuthor().getName() +
-            " " + mp.getCreationDate().toString() +
-            " " + mp.getMentions().toString() +
-            " " + mp.getTimestamp().toString();
-            if(text.contains(word)) { refinedMessageList.add(mp); }
+            if (incTerm.isSelected()){
+                for(int ip = 0;i<messagesList.size();i++){
+                    IMessage mp = (IMessage) messagesList.get(ip);
+                    
+                    text = mp.getContent() +
+                     " " + mp.getAuthor().getName() +
+                     " " + mp.getCreationDate().toString() +
+                     " " + mp.getMentions().toString() +
+                     " " + mp.getTimestamp().toString();
+                    
+                    if(text.contains(word)) { refinedMessageList.add(mp); }
+                }
+                messagesList = refinedMessageList;
             }
-            messagesList = null; messagesList = refinedMessageList;
-            }*/
             
             if(exTextOnly.isSelected() && (hasEmbed || hasAttachment)) { insertRow(m,messageDisplay); } else {
-                if(incTerm.isSelected() && text.contains(word)) { insertRow(m,messageDisplay); } else {
+                if(incTerm.isSelected()) { insertRow(m,messageDisplay); } else {
                     if(!exTextOnly.isSelected()) {  insertRow(m,messageDisplay); }
                 }
             }
@@ -593,52 +679,9 @@ public class start extends javax.swing.JFrame{
     private void dateChooserCombo1OnSelectionChange(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_dateChooserCombo1OnSelectionChange
         DateFormat dtf = new SimpleDateFormat("dd/mm/yyyy");
         selectedDate = dateChooserCombo1.getSelectedPeriodSet().getFirstDate().toInstant();
-        dateSearch.setText(selectedDate.toString());
+        dateSearch.setText(selectedDate.toString()); incDate.setSelected(true);
     }//GEN-LAST:event_dateChooserCombo1OnSelectionChange
 
-    private void theWordSearch(){
-        
-        String word = wordSearch.getText();
-        if (word.length()<1) { return; }
-        
-        messagesList = null;
-        List channels = cli.getChannels();
-        if(channels.size()<1) { return; }
-        for(int i = 0;i<channels.size();i++) {
-            IChannel channel = (IChannel) channels.get(i);
-            String channelComboSelection = channelCombo.getSelectedItem().toString();
-            if(channel.getName().equalsIgnoreCase(channelComboSelection)){
-                messagesList = channel.getMessageHistory(1000);
-            }
-        }
-        
-        for(int i = 0;i<messagesList.size();i++){
-            IMessage m = (IMessage) messagesList.get(i);
-            String text = m.getContent() + 
-                    " " + m.getAuthor().getName() + 
-                    " " + m.getCreationDate().toString() + 
-                    " " + m.getMentions().toString() + 
-                    " " + m.getTimestamp().toString();
-            if(text.contains(word)) { refinedMessageList.add(m); }
-        }
-        messagesList = null; messagesList = refinedMessageList;
-        
-        if(messagesList!=null){
-        setupMessagesTable();
-        boolean hasEmbed = false, hasAttachment = false;
-        for (int i = 0; i<messagesList.size(); i++ ) {
-            IMessage m = (IMessage) messagesList.get(i);
-            if(m.getEmbeds().size()>0) { hasEmbed = true; } else { hasEmbed = false; }
-            if(m.getAttachments().size()>0) { hasAttachment = true; } else { hasAttachment = false; }
-            
-            if(exTextOnly.isSelected() && (hasEmbed || hasAttachment)) { insertRow(m,messageDisplay); } else {
-                if(!exTextOnly.isSelected()) {  insertRow(m,messageDisplay); }
-            }
-            }
-        } else { setupMessagesTable(); }
-        
-    }
-    
     private void checkUserData(){
 
         if(cli.isLoggedIn()) {
@@ -732,12 +775,13 @@ public class start extends javax.swing.JFrame{
     private DefaultTableModel setupMessagesTable(){
         
         Object[] columnNames = {"inc", "User", "Date", "Content"};
-        Object[][] data = { {} };
+        Object[][] data = {};
         
         mModel = new DefaultTableModel(data, columnNames);
         JTableHeader header = messageDisplay.getTableHeader();
         header.setBackground(darkBlue);
         header.setForeground(text);
+        header.setBounds(0, 0, 100, 40);
         messageDisplay.setGridColor(lines);
         messageDisplay.setRowHeight(20);
         
@@ -849,14 +893,15 @@ public class start extends javax.swing.JFrame{
     private javax.swing.JPanel QPostPane;
     private javax.swing.JScrollPane QPostSroll;
     private javax.swing.JTextField authorEdit;
+    private javax.swing.JTextField authorEdit1;
     private javax.swing.JLabel authorLabel;
+    private javax.swing.JLabel authorLabel1;
     private javax.swing.JPanel backdrop;
     private javax.swing.JComboBox<String> channelCombo;
     private javax.swing.JLabel channelLabel;
     private datechooser.beans.DateChooserCombo dateChooserCombo1;
     private javax.swing.JTextField dateEdit1;
     private javax.swing.JLabel dateLabel1;
-    private javax.swing.JLabel dateLabel2;
     private javax.swing.JTextField dateSearch;
     private javax.swing.JCheckBox exTextOnly;
     private javax.swing.JTextPane fMessageDisplay;
@@ -865,13 +910,20 @@ public class start extends javax.swing.JFrame{
     private javax.swing.JLabel guildLabel;
     private javax.swing.JCheckBox incDate;
     private javax.swing.JCheckBox incTerm;
+    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel loadPane;
     private javax.swing.JButton loadTables;
     private javax.swing.JButton logInBut;
