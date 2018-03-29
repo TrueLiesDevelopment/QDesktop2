@@ -24,6 +24,8 @@ import javax.swing.ListSelectionModel;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
@@ -73,6 +75,7 @@ public class start extends javax.swing.JFrame{
     public IChannel selectedChannel = null;
     public IMessage selectedMessage = null;
     public java.time.Instant selectedDate = null;
+    public String idGrab = "";
     
     /**
      * Creates new form start
@@ -128,21 +131,23 @@ public class start extends javax.swing.JFrame{
         authorLabel = new javax.swing.JLabel();
         authorEdit = new javax.swing.JTextField();
         dateLabel1 = new javax.swing.JLabel();
-        dateEdit1 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        dateEdit = new javax.swing.JTextField();
+        embedCheck = new javax.swing.JCheckBox();
+        attachmentCheck = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         authorLabel1 = new javax.swing.JLabel();
-        authorEdit1 = new javax.swing.JTextField();
-        fMessageScrool = new javax.swing.JScrollPane();
-        fMessageDisplay = new javax.swing.JTextPane();
+        IDEdit = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        fMessageDisplay = new javax.swing.JTextPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         logInBut1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
         QPostPane = new javax.swing.JPanel();
         QPostSroll = new javax.swing.JScrollPane();
         qPostList = new javax.swing.JTable();
@@ -183,7 +188,7 @@ public class start extends javax.swing.JFrame{
 
         exTextOnly.setBackground(new java.awt.Color(47, 49, 54));
         exTextOnly.setText("exc text only posts");
-        exTextOnly.setToolTipText("If you are looking for a video or photograph then tick this option.");
+        exTextOnly.setToolTipText("If you are looking for a embeds or attachments ONLY then tick this option.");
 
         loadTables.setBackground(new java.awt.Color(102, 51, 0));
         loadTables.setText("Load Tables");
@@ -193,7 +198,10 @@ public class start extends javax.swing.JFrame{
             }
         });
 
+        wordSearch.setToolTipText("Search for an exact term, case sensitive for Q post accuracy.");
+
         dateSearch.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        dateSearch.setToolTipText("Search from a given date and time");
 
         incTerm.setBackground(new java.awt.Color(47, 49, 54));
         incTerm.setText("containing this term");
@@ -387,11 +395,11 @@ public class start extends javax.swing.JFrame{
     dateLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     dateLabel1.setText("Date:");
 
-    jCheckBox1.setBackground(new java.awt.Color(47, 49, 54));
-    jCheckBox1.setText("Embed");
+    embedCheck.setBackground(new java.awt.Color(47, 49, 54));
+    embedCheck.setText("Embed");
 
-    jCheckBox2.setBackground(new java.awt.Color(47, 49, 54));
-    jCheckBox2.setText("Attachment");
+    attachmentCheck.setBackground(new java.awt.Color(47, 49, 54));
+    attachmentCheck.setText("Attachment");
 
     jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel3.setText("Icon");
@@ -404,45 +412,44 @@ public class start extends javax.swing.JFrame{
     authorLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     authorLabel1.setText(" ID:");
 
-    fMessageDisplay.setBackground(new java.awt.Color(0, 0, 0));
-    fMessageScrool.setViewportView(fMessageDisplay);
-
     jButton1.setText("Add Message");
+
+    jScrollPane2.setViewportView(fMessageDisplay);
 
     javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
     jPanel4.setLayout(jPanel4Layout);
     jPanel4Layout.setHorizontalGroup(
         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel4Layout.createSequentialGroup()
-            .addGap(17, 17, 17)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
-                    .addGap(28, 28, 28)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(authorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(authorLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(17, 17, 17)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(jCheckBox1)
-                            .addGap(18, 18, 18)
-                            .addComponent(jCheckBox2)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                             .addGap(28, 28, 28)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(authorEdit)
-                            .addComponent(dateEdit1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                            .addComponent(authorEdit1)))))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(authorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dateLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(authorLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(embedCheck)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(attachmentCheck)
+                                    .addGap(28, 28, 28)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(authorEdit)
+                                    .addComponent(dateEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                                    .addComponent(IDEdit)))))))
             .addGap(26, 26, 26))
-        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(fMessageScrool, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE)))
     );
     jPanel4Layout.setVerticalGroup(
         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -454,7 +461,7 @@ public class start extends javax.swing.JFrame{
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(authorLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(authorEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(IDEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(11, 11, 11)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(authorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -462,20 +469,16 @@ public class start extends javax.swing.JFrame{
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(dateLabel1)
-                        .addComponent(dateEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(dateEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(18, 18, 18)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jButton1)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2)))
-            .addContainerGap(276, Short.MAX_VALUE))
-        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(230, Short.MAX_VALUE)
-                .addComponent(fMessageScrool, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE)))
+                .addComponent(embedCheck)
+                .addComponent(attachmentCheck))
+            .addGap(18, 18, 18)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(25, Short.MAX_VALUE))
     );
 
     jTabbedPane1.addTab("Message View", jPanel4);
@@ -493,14 +496,14 @@ public class start extends javax.swing.JFrame{
         .addGroup(jPanel2Layout.createSequentialGroup()
             .addGap(18, 18, 18)
             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(278, Short.MAX_VALUE))
+            .addContainerGap(267, Short.MAX_VALUE))
     );
     jPanel2Layout.setVerticalGroup(
         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel2Layout.createSequentialGroup()
             .addGap(17, 17, 17)
             .addComponent(jLabel7)
-            .addContainerGap(435, Short.MAX_VALUE))
+            .addContainerGap(444, Short.MAX_VALUE))
     );
 
     jTabbedPane1.addTab("Q Folder", jPanel2);
@@ -516,7 +519,10 @@ public class start extends javax.swing.JFrame{
     });
 
     jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel8.setText("Items in Q Folder");
+    jLabel8.setText("Items in Q Folder:");
+
+    jScrollPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+    jScrollPane1.setViewportView(jEditorPane1);
 
     javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);
@@ -529,20 +535,30 @@ public class start extends javax.swing.JFrame{
         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(127, 127, 127)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE)))
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE)))
+        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(254, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)))
     );
     jPanel3Layout.setVerticalGroup(
         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
             .addComponent(logInBut1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(9, Short.MAX_VALUE))
         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addComponent(jLabel8)
-                .addContainerGap(11, Short.MAX_VALUE)))
+                .addContainerGap(12, Short.MAX_VALUE)))
+        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(7, Short.MAX_VALUE)))
     );
 
     javax.swing.GroupLayout loadPaneLayout = new javax.swing.GroupLayout(loadPane);
@@ -563,8 +579,8 @@ public class start extends javax.swing.JFrame{
             .addContainerGap(475, Short.MAX_VALUE))
         .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loadPaneLayout.createSequentialGroup()
-                .addContainerGap(863, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(874, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(24, Short.MAX_VALUE)))
     );
     loadPaneLayout.setVerticalGroup(
@@ -578,12 +594,12 @@ public class start extends javax.swing.JFrame{
             .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(mssagesScroll)
                 .addComponent(searchControls, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap(18, Short.MAX_VALUE))
+            .addContainerGap(17, Short.MAX_VALUE))
         .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loadPaneLayout.createSequentialGroup()
                 .addContainerGap(76, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE)))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE)))
     );
 
     MainPane.addTab("Members Posts", loadPane);
@@ -771,7 +787,7 @@ public class start extends javax.swing.JFrame{
         
         mModel = (DefaultTableModel) j.getModel();
         
-        mModel.insertRow(mModel.getRowCount(), new Object[] { false, o.getAuthor().getName(), o.getTimestamp().toString(), o.getContent() });
+        mModel.insertRow(mModel.getRowCount(), new Object[] { o.getStringID(), o.getAuthor().getName(), o.getTimestamp().toString(), o.getContent() });
         
         j.setModel(mModel);
     }
@@ -791,16 +807,17 @@ public class start extends javax.swing.JFrame{
         
         qModel = (DefaultTableModel) qPostList.getModel();
         
-        String[] qcolumns={"use", "ID", "Date", "Text"};
+        String[] qcolumns={ "ID", "User", "Date", "Content"};
         qModel.setColumnIdentifiers(qcolumns);
         
         qPostList.setModel(qModel);
         
         TableColumnModel qcolumnModel = qPostList.getColumnModel();
-        qcolumnModel.getColumn(0).setPreferredWidth(50);
+        qcolumnModel.getColumn(0).setPreferredWidth(80);
         qcolumnModel.getColumn(1).setPreferredWidth(100);
-        qcolumnModel.getColumn(2).setPreferredWidth(280);
+        qcolumnModel.getColumn(2).setPreferredWidth(120);
         qcolumnModel.getColumn(3).setPreferredWidth(400);
+        
         
         qPostList.setColumnModel(qcolumnModel);
     }
@@ -828,7 +845,7 @@ public class start extends javax.swing.JFrame{
     
     private DefaultTableModel setupMessagesTable(){
         
-        Object[] columnNames = {"inc", "User", "Date", "Content"};
+        Object[] columnNames = {"ID", "User", "Date", "Content"};
         Object[][] data = {};
         
         mModel = new DefaultTableModel(data, columnNames);
@@ -842,10 +859,12 @@ public class start extends javax.swing.JFrame{
         messageDisplay.setModel(mModel);
         
         TableColumnModel columnModel = messageDisplay.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(50);
+        
+        columnModel.getColumn(0).setPreferredWidth(80);
         columnModel.getColumn(1).setPreferredWidth(120);
-        columnModel.getColumn(2).setPreferredWidth(190);
+        columnModel.getColumn(2).setPreferredWidth(90);
         columnModel.getColumn(3).setPreferredWidth(350);
+
         messageDisplay.setColumnModel(columnModel);
         return mModel;
     }
@@ -866,6 +885,29 @@ public class start extends javax.swing.JFrame{
             }
         });
         
+            
+            // table
+            
+        messageDisplay.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+        public void valueChanged(ListSelectionEvent event) {
+
+            String ID = null;
+            try {
+                ID = messageDisplay.getValueAt(messageDisplay.getSelectedRow(), 0).toString();
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return;
+            }
+            if (!ID.matches(idGrab)) {
+                idGrab = ID;
+                IMessage selectedMessage = selectedChannel.fetchMessage(Long.parseLong(ID));
+                IDEdit.setText(selectedMessage.getStringID());
+                authorEdit.setText(selectedMessage.getAuthor().getName());
+                dateEdit.setText(selectedMessage.getTimestamp().toString());
+                fMessageDisplay.setText(selectedMessage.getFormattedContent());
+            } 
+        }
+    });
+            
     }
     
     public void populateChannelsCombo(String guild){
@@ -943,30 +985,30 @@ public class start extends javax.swing.JFrame{
     });
                 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField IDEdit;
     private javax.swing.JTabbedPane MainPane;
     private javax.swing.JPanel QPostPane;
     private javax.swing.JScrollPane QPostSroll;
+    private javax.swing.JCheckBox attachmentCheck;
     private javax.swing.JTextField authorEdit;
-    private javax.swing.JTextField authorEdit1;
     private javax.swing.JLabel authorLabel;
     private javax.swing.JLabel authorLabel1;
     private javax.swing.JPanel backdrop;
     private javax.swing.JComboBox<String> channelCombo;
     private javax.swing.JLabel channelLabel;
     private datechooser.beans.DateChooserCombo dateChooserCombo1;
-    private javax.swing.JTextField dateEdit1;
+    private javax.swing.JTextField dateEdit;
     private javax.swing.JLabel dateLabel1;
     private javax.swing.JTextField dateSearch;
+    private javax.swing.JCheckBox embedCheck;
     private javax.swing.JCheckBox exTextOnly;
     private javax.swing.JTextPane fMessageDisplay;
-    private javax.swing.JScrollPane fMessageScrool;
     private javax.swing.JComboBox<String> guildCombo;
     private javax.swing.JLabel guildLabel;
     private javax.swing.JCheckBox incDate;
     private javax.swing.JCheckBox incTerm;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -979,6 +1021,8 @@ public class start extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel loadPane;
     private javax.swing.JButton loadTables;
