@@ -7,18 +7,40 @@
 package qd2;
 
 import datechooser.beans.DateChooserDialog;
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import qd2.api.MyEvents;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
@@ -35,6 +57,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import sx.blah.discord.handle.impl.obj.Guild;
 import sx.blah.discord.handle.impl.obj.User;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IEmbed;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
@@ -70,19 +93,27 @@ public class start extends javax.swing.JFrame{
     private DefaultTableModel mModel;
     private DefaultTableModel qModel;
     public ArrayList<String> guildComboReply = null;
+    public HashMap<String,String> tempImages = new HashMap<String,String>();
     public IGuild selectedGuild = null;
     public IUser selectedUser = null;
     public IChannel selectedChannel = null;
     public IMessage selectedMessage = null;
     public java.time.Instant selectedDate = null;
     public String idGrab = "";
+    public String TheURL = "";
+    public String TheID = "";
+    public JFrame base = null;
+    private BufferedImage imagez=null;
     
     /**
      * Creates new form start
      */
     public start() {
         
+        
         initComponents();
+        
+        base = this;
         
         mssagesScroll.getViewport().setBackground(darkBlue);
         messageDisplay.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -90,7 +121,7 @@ public class start extends javax.swing.JFrame{
         
         setupTables();
         listeners();                               // add table & combo listeners
-
+        startSequence();
         
     }
 
@@ -109,10 +140,6 @@ public class start extends javax.swing.JFrame{
         messageDisplay = new javax.swing.JTable();
         searchControls = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        guildLabel = new javax.swing.JLabel();
-        channelLabel = new javax.swing.JLabel();
-        channelCombo = new javax.swing.JComboBox<>();
-        guildCombo = new javax.swing.JComboBox<>();
         exTextOnly = new javax.swing.JCheckBox();
         loadTables = new javax.swing.JButton();
         wordSearch = new javax.swing.JTextField();
@@ -134,20 +161,24 @@ public class start extends javax.swing.JFrame{
         dateEdit = new javax.swing.JTextField();
         embedCheck = new javax.swing.JCheckBox();
         attachmentCheck = new javax.swing.JCheckBox();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        avatar = new javax.swing.JLabel();
+        messageDetailsLabel = new javax.swing.JLabel();
         authorLabel1 = new javax.swing.JLabel();
         IDEdit = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        fMessageDisplay = new javax.swing.JTextPane();
+        addToQFolderBut = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        fMessageDisplay = new javax.swing.JEditorPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        logInBut1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jEditorPane1 = new javax.swing.JEditorPane();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        guildLabel = new javax.swing.JLabel();
+        guildCombo = new javax.swing.JComboBox<>();
+        channelLabel = new javax.swing.JLabel();
+        channelCombo = new javax.swing.JComboBox<>();
         QPostPane = new javax.swing.JPanel();
         QPostSroll = new javax.swing.JScrollPane();
         qPostList = new javax.swing.JTable();
@@ -174,24 +205,12 @@ public class start extends javax.swing.JFrame{
         jLabel2.setForeground(new java.awt.Color(185, 193, 188));
         jLabel2.setText("Search for content...");
 
-        guildLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        guildLabel.setText("Guild");
-        guildLabel.setEnabled(false);
-
-        channelLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        channelLabel.setText("Channel");
-        channelLabel.setEnabled(false);
-
-        channelCombo.setEnabled(false);
-
-        guildCombo.setEnabled(false);
-
         exTextOnly.setBackground(new java.awt.Color(47, 49, 54));
         exTextOnly.setText("exc text only posts");
         exTextOnly.setToolTipText("If you are looking for a embeds or attachments ONLY then tick this option.");
 
         loadTables.setBackground(new java.awt.Color(102, 51, 0));
-        loadTables.setText("Load Tables");
+        loadTables.setText("re-load Tables");
         loadTables.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loadTablesActionPerformed(evt);
@@ -271,66 +290,41 @@ public class start extends javax.swing.JFrame{
         searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(searchControlsLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(searchControlsLayout.createSequentialGroup()
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                    .addContainerGap())
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-                            .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(exTextOnly, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-                                    .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(incDate)
-                                        .addComponent(dateSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(incTerm)
-                                        .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                                            .addComponent(wordSearch, javax.swing.GroupLayout.Alignment.TRAILING)))
-                                    .addGap(12, 12, 12)))
-                            .addContainerGap())
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-                            .addComponent(loadTables, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(46, 46, 46))))))
-        .addGroup(searchControlsLayout.createSequentialGroup()
-            .addGap(14, 14, 14)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addContainerGap())
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
+            .addGap(53, 53, 53)
             .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-                    .addComponent(channelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
-                    .addComponent(guildLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(exTextOnly, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(loadTables, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(searchControlsLayout.createSequentialGroup()
+            .addGap(19, 19, 19)
+            .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(incDate)
+                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(dateSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(0, 0, Short.MAX_VALUE))
+        .addGroup(searchControlsLayout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
+                    .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(wordSearch, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchControlsLayout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(incTerm)))
+                    .addContainerGap())))
     );
     searchControlsLayout.setVerticalGroup(
         searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(searchControlsLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(jLabel2)
-            .addGap(24, 24, 24)
-            .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(guildLabel))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(searchControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(channelLabel))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(exTextOnly)
-            .addGap(27, 27, 27)
-            .addComponent(jLabel5)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(wordSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(incTerm)
-            .addGap(32, 32, 32)
+            .addGap(18, 18, 18)
             .addComponent(jLabel4)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -338,21 +332,30 @@ public class start extends javax.swing.JFrame{
             .addComponent(dateSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(incDate)
-            .addGap(33, 33, 33)
+            .addGap(38, 38, 38)
+            .addComponent(jLabel5)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(wordSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(incTerm)
+            .addGap(47, 47, 47)
+            .addComponent(exTextOnly)
+            .addGap(18, 18, 18)
             .addComponent(loadTables)
-            .addContainerGap(19, Short.MAX_VALUE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     jPanel1.setBackground(new java.awt.Color(47, 49, 54));
     jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-    jLabel1.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 20)); // NOI18N
+    jLabel1.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 0, 20)); // NOI18N
     jLabel1.setForeground(new java.awt.Color(185, 193, 188));
     jLabel1.setText("Connect...");
 
     username.setText("MrScabby");
     username.setToolTipText("Enter your online Username");
 
+    logInBut.setBackground(new java.awt.Color(102, 51, 0));
     logInBut.setText("Log In");
     logInBut.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -401,61 +404,62 @@ public class start extends javax.swing.JFrame{
     attachmentCheck.setBackground(new java.awt.Color(47, 49, 54));
     attachmentCheck.setText("Attachment");
 
-    jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    jLabel3.setText("Icon");
-    jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(185, 193, 188)));
+    avatar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-    jLabel6.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 20)); // NOI18N
-    jLabel6.setForeground(new java.awt.Color(185, 193, 188));
-    jLabel6.setText("Message details...");
+    messageDetailsLabel.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 20)); // NOI18N
+    messageDetailsLabel.setForeground(new java.awt.Color(185, 193, 188));
+    messageDetailsLabel.setText("Message details...");
 
     authorLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     authorLabel1.setText(" ID:");
 
-    jButton1.setText("Add Message");
+    addToQFolderBut.setBackground(new java.awt.Color(102, 51, 0));
+    addToQFolderBut.setText("Add Message");
 
-    jScrollPane2.setViewportView(fMessageDisplay);
+    jScrollPane3.setViewportView(fMessageDisplay);
 
     javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
     jPanel4.setLayout(jPanel4Layout);
     jPanel4Layout.setHorizontalGroup(
         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGap(17, 17, 17)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(messageDetailsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                    .addGap(28, 28, 28)
+                    .addComponent(avatar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(17, 17, 17)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                            .addGap(28, 28, 28)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(authorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(dateLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(authorLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(embedCheck)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(attachmentCheck)
-                                    .addGap(28, 28, 28)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(authorEdit)
-                                    .addComponent(dateEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                                    .addComponent(IDEdit)))))))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(authorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dateLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(authorLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(authorEdit)
+                        .addComponent(dateEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                        .addComponent(IDEdit))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)))
             .addGap(26, 26, 26))
+        .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGap(42, 42, 42)
+            .addComponent(embedCheck)
+            .addGap(18, 18, 18)
+            .addComponent(attachmentCheck)
+            .addGap(28, 28, 28)
+            .addComponent(addToQFolderBut, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE)))
     );
     jPanel4Layout.setVerticalGroup(
         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel4Layout.createSequentialGroup()
             .addGap(17, 17, 17)
-            .addComponent(jLabel6)
+            .addComponent(messageDetailsLabel)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
@@ -470,15 +474,18 @@ public class start extends javax.swing.JFrame{
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(dateLabel1)
                         .addComponent(dateEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(avatar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(18, 18, 18)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jButton1)
+                .addComponent(addToQFolderBut)
                 .addComponent(embedCheck)
                 .addComponent(attachmentCheck))
-            .addGap(18, 18, 18)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(25, Short.MAX_VALUE))
+            .addContainerGap(283, Short.MAX_VALUE))
+        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(216, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)))
     );
 
     jTabbedPane1.addTab("Message View", jPanel4);
@@ -511,18 +518,13 @@ public class start extends javax.swing.JFrame{
     jPanel3.setBackground(new java.awt.Color(47, 49, 54));
     jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-    logInBut1.setText("Add Selected");
-    logInBut1.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            logInBut1ActionPerformed(evt);
-        }
-    });
-
     jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-    jLabel8.setText("Items in Q Folder:");
+    jLabel8.setText(" Q Folder:");
 
-    jScrollPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-    jScrollPane1.setViewportView(jEditorPane1);
+    jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel9.setText("items.");
+
+    jLabel3.setText("0");
 
     javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);
@@ -530,35 +532,65 @@ public class start extends javax.swing.JFrame{
         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(logInBut1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel8)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jLabel3)
+            .addGap(18, 18, 18)
+            .addComponent(jLabel9)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(127, 127, 127)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE)))
-        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(254, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)))
     );
     jPanel3Layout.setVerticalGroup(
         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel3Layout.createSequentialGroup()
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel3)
+                .addComponent(jLabel9))
+            .addContainerGap())
+    );
+
+    jPanel5.setBackground(new java.awt.Color(47, 49, 54));
+    jPanel5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+    guildLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+    guildLabel.setText("Guild");
+    guildLabel.setEnabled(false);
+
+    guildCombo.setEnabled(false);
+
+    channelLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+    channelLabel.setText("Channel");
+    channelLabel.setEnabled(false);
+
+    channelCombo.setEnabled(false);
+
+    javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+    jPanel5.setLayout(jPanel5Layout);
+    jPanel5Layout.setHorizontalGroup(
+        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel5Layout.createSequentialGroup()
+            .addGap(12, 12, 12)
+            .addComponent(guildLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18)
+            .addComponent(channelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    jPanel5Layout.setVerticalGroup(
+        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel5Layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(logInBut1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(9, Short.MAX_VALUE))
-        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jLabel8)
-                .addContainerGap(12, Short.MAX_VALUE)))
-        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE)))
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(guildCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(guildLabel)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(channelCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(channelLabel)))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout loadPaneLayout = new javax.swing.GroupLayout(loadPane);
@@ -567,16 +599,18 @@ public class start extends javax.swing.JFrame{
         loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(loadPaneLayout.createSequentialGroup()
             .addGap(30, 30, 30)
-            .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(loadPaneLayout.createSequentialGroup()
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(loadPaneLayout.createSequentialGroup()
                     .addComponent(searchControls, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(26, 26, 26)
                     .addComponent(mssagesScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(475, Short.MAX_VALUE))
+            .addContainerGap(202, Short.MAX_VALUE))
         .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loadPaneLayout.createSequentialGroup()
                 .addContainerGap(874, Short.MAX_VALUE)
@@ -589,10 +623,11 @@ public class start extends javax.swing.JFrame{
             .addGap(26, 26, 26)
             .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGap(30, 30, 30)
             .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(mssagesScroll)
+                .addComponent(mssagesScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
                 .addComponent(searchControls, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap(17, Short.MAX_VALUE))
         .addGroup(loadPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -658,61 +693,7 @@ public class start extends javax.swing.JFrame{
 
     private void loadTablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadTablesActionPerformed
 
-        String aString = null;
-        try {
-            aString = channelCombo.getSelectedItem().toString();
-        } catch (Exception e) {
-            return;
-        }
-        
-        if(aString.length()>0){
-            List channels = cli.getChannels(); if(channels.size()<1) { return; } 
-            for(int i = 0;i<channels.size();i++){
-                IChannel aChan = (IChannel) channels.get(i);
-                if (aChan.getName().equalsIgnoreCase(aString)) { selectedChannel = aChan; }
-                
-            }
-        } else { return; }
-        if(selectedDate!=null) {} else { incDate.setSelected(false); }
-        if(incDate.isSelected() && selectedDate.toString().length()>0) {
-            messagesList = selectedChannel.getMessageHistoryFrom(selectedDate, 1000);
-            } else {
-            messagesList = selectedChannel.getMessageHistory(1000); }               // if date then grab from then +1000
-                                                                                    // else grab last 1000
-        setupMessagesTable();
-        
-        String word = wordSearch.getText();String text="";refinedMessageList.clear();
-        if (word.length()<1) { incTerm.setSelected(false); }
-            
-        if (incTerm.isSelected()){
-                for(int ip = 0;ip<messagesList.size();ip++){
-                    IMessage mp = (IMessage) messagesList.get(ip);
-                    
-                    text = mp.getContent() +
-                     " " + mp.getAuthor().getName() +
-                     " " + mp.getCreationDate().toString() +
-                     " " + mp.getMentions().toString() +
-                     " " + mp.getTimestamp().toString();
-                    
-                    if(text.contains(word)) { refinedMessageList.add(mp); }
-                }
-                messagesList = refinedMessageList;
-            }
-        
-        boolean hasEmbed = false, hasAttachment = false;                            // begin refining the list
-        
-        for (int i = 0; i<messagesList.size(); i++ ) {
-            IMessage m = (IMessage) messagesList.get(i);                            // if embed or attachment flag them
-            if(m.getEmbeds().size()>0) { hasEmbed = true; } else { hasEmbed = false; }
-            if(m.getAttachments().size()>0) { hasAttachment = true; } else { hasAttachment = false; }
-            
-
-            if(exTextOnly.isSelected() && (hasEmbed || hasAttachment)) { insertRow(m,messageDisplay); } else {
-                if(incTerm.isSelected()) { insertRow(m,messageDisplay); } else {
-                    if(!exTextOnly.isSelected()) {  insertRow(m,messageDisplay); }
-                }
-            }
-        }
+        loadTables();
     }//GEN-LAST:event_loadTablesActionPerformed
 
     private void logInButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInButActionPerformed
@@ -732,14 +713,21 @@ public class start extends javax.swing.JFrame{
 
         cli.getDispatcher().registerListener(new MyEvents());
 
-        cli.login();
-
+        try {
+            cli.login();
+        } catch (NullPointerException e) {
+            throw(e);
+        }
         switchOnOff("on");
 
         while (cli.getGuilds().size()<1) { }        // wait till confirmed login\
 
         checkUserData();                          // combo population
         populateChannelsCombo("");
+        while(channelCombo.getItemCount()<1){
+            populateChannelsCombo("");
+        }
+        loadTables();
     }//GEN-LAST:event_logInButActionPerformed
 
     private void dateChooserCombo1OnSelectionChange(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_dateChooserCombo1OnSelectionChange
@@ -747,10 +735,6 @@ public class start extends javax.swing.JFrame{
         selectedDate = dateChooserCombo1.getSelectedPeriodSet().getFirstDate().toInstant();
         dateSearch.setText(selectedDate.toString()); incDate.setSelected(true);
     }//GEN-LAST:event_dateChooserCombo1OnSelectionChange
-
-    private void logInBut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInBut1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_logInBut1ActionPerformed
 
     private void checkUserData(){
 
@@ -800,27 +784,17 @@ public class start extends javax.swing.JFrame{
     
     private void setupTables(){
         
-        mModel = (DefaultTableModel) messageDisplay.getModel();
         setupMessagesTable();
-        
-        messageDisplay.setModel(mModel);
-        
-        qModel = (DefaultTableModel) qPostList.getModel();
-        
-        String[] qcolumns={ "ID", "User", "Date", "Content"};
-        qModel.setColumnIdentifiers(qcolumns);
-        
-        qPostList.setModel(qModel);
-        
-        TableColumnModel qcolumnModel = qPostList.getColumnModel();
-        qcolumnModel.getColumn(0).setPreferredWidth(80);
-        qcolumnModel.getColumn(1).setPreferredWidth(100);
-        qcolumnModel.getColumn(2).setPreferredWidth(120);
-        qcolumnModel.getColumn(3).setPreferredWidth(400);
-        
-        
-        qPostList.setColumnModel(qcolumnModel);
+                
+        setupQPostsTable();
     }
+    
+    private void startSequence(){
+    
+            switchOnOff("off");
+            
+    }
+        
     
     private void switchOnOff(String type){
 
@@ -832,16 +806,48 @@ public class start extends javax.swing.JFrame{
             channelCombo.setEnabled(true);
             channelLabel.setEnabled(true);
             guildLabel.setEnabled(true);
+            wordSearch.setEnabled(true);
+            incTerm.setEnabled(true);
+            dateChooserCombo1.setEnabled(true);
+            dateSearch.setEnabled(true);
+            incDate.setEnabled(true);
+            addToQFolderBut.setEnabled(true);
+            embedCheck.setEnabled(true);
+            attachmentCheck.setEnabled(true);
         } else {
+            attachmentCheck.setEnabled(false);
+            embedCheck.setEnabled(false);
             mssagesScroll.setEnabled(false);
+            addToQFolderBut.setEnabled(false);
             messageDisplay.setEnabled(false);
             loadTables.setEnabled(false);
-            guildCombo.setEnabled(true);
-            channelCombo.setEnabled(true);
-            channelLabel.setEnabled(true);
-            guildLabel.setEnabled(true);
+            guildCombo.setEnabled(false);
+            channelCombo.setEnabled(false);
+            channelLabel.setEnabled(false);
+            guildLabel.setEnabled(false);
+            wordSearch.setEnabled(false);
+            incTerm.setEnabled(false);
+            dateChooserCombo1.setEnabled(false);
+            dateSearch.setEnabled(false);
+            incDate.setEnabled(false);
         }
     }       //redundent
+    
+    public void Dialog(JFrame mf,String title,boolean modal){
+        JDialog panel = new JDialog();
+        panel.setBounds(base.getX()+(base.getWidth()/3), base.getY()+(base.getHeight()/3), base.getWidth()/3, base.getHeight()/3);
+        panel.add(new javax.swing.JLabel(title));
+        panel.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        panel.setModal(modal);
+        JButton but = new JButton("ok!");
+        panel.add(but);
+       
+        panel.setVisible(true);
+        
+        
+        
+    }
+    
     
     private DefaultTableModel setupMessagesTable(){
         
@@ -869,6 +875,25 @@ public class start extends javax.swing.JFrame{
         return mModel;
     }
     
+    private void setupQPostsTable(){
+        
+        qModel = (DefaultTableModel) qPostList.getModel();
+        
+        String[] qcolumns={ "ID", "User", "Date", "Content"};
+        qModel.setColumnIdentifiers(qcolumns);
+        
+        qPostList.setModel(qModel);
+        
+        TableColumnModel qcolumnModel = qPostList.getColumnModel();
+        qcolumnModel.getColumn(0).setPreferredWidth(80);
+        qcolumnModel.getColumn(1).setPreferredWidth(100);
+        qcolumnModel.getColumn(2).setPreferredWidth(120);
+        qcolumnModel.getColumn(3).setPreferredWidth(400);
+        
+        
+        qPostList.setColumnModel(qcolumnModel);
+    }
+    
     private void listeners() {
 
         java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -891,21 +916,81 @@ public class start extends javax.swing.JFrame{
         messageDisplay.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
         public void valueChanged(ListSelectionEvent event) {
 
-            String ID = null;
+            String ID = null, fileLoc = "";
             try {
                 ID = messageDisplay.getValueAt(messageDisplay.getSelectedRow(), 0).toString();
             } catch (ArrayIndexOutOfBoundsException e) {
                 return;
             }
+            if(ID.isEmpty()) {return;}
             if (!ID.matches(idGrab)) {
-                idGrab = ID;
+                idGrab = ID; int numberOfEmbeds = 0; int numberOfAttachments = 0;String aUrl="";
                 IMessage selectedMessage = selectedChannel.fetchMessage(Long.parseLong(ID));
                 IDEdit.setText(selectedMessage.getStringID());
                 authorEdit.setText(selectedMessage.getAuthor().getName());
                 dateEdit.setText(selectedMessage.getTimestamp().toString());
                 fMessageDisplay.setText(selectedMessage.getFormattedContent());
-            } 
-        }
+                
+                if(!selectedMessage.getEmbeds().isEmpty()) {
+                    embedCheck.setSelected(true);
+                    List embeds = selectedMessage.getEmbeds();
+                    numberOfEmbeds = embeds.size();
+                    for(int i = 0;i<numberOfEmbeds;i++){
+                        IEmbed sEmbed = (IEmbed) embeds.get(i);
+                        String aString = fMessageDisplay.getText();
+                        aString = aString + "\n" +  sEmbed.getUrl();
+                    }
+                } else { embedCheck.setSelected(false); }
+                
+                if(!selectedMessage.getAttachments().isEmpty()) {                       // Start of Attachment loop
+                    attachmentCheck.setSelected(true);
+                    List attachments = selectedMessage.getAttachments();
+                    numberOfAttachments = attachments.size();
+
+                    for(int i = 0;i<numberOfEmbeds;i++){
+                        IMessage.Attachment anAttachment = (IMessage.Attachment) attachments.get(i);
+                        String aString = fMessageDisplay.getText();
+                        aString = aString + "\n" +  anAttachment.getUrl();
+                    }
+                    
+                    for(int i = 0;i<numberOfAttachments;i++){
+                        try {
+                            IMessage.Attachment IA = (IMessage.Attachment) attachments.get(i);
+                            TheURL = IA.getUrl();
+                            TheID = IA.getStringID();
+                            
+                            System.out.println("TheURL:" + TheURL);
+                            System.out.println("TheID:" + TheID);
+                            
+                            fileLoc = SaveImageFromUrl(TheURL, TheID);
+                            tempImages.put(ID, fileLoc);       // store <ID + "number", file Location + name>
+                            imagez = ImageIO.read(new File(fileLoc));
+                        } catch (IOException ex) {
+                            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } else { attachmentCheck.setSelected(false); }
+                
+                if (!tempImages.isEmpty()) { 
+                    
+                    String fileID = selectedMessage.getStringID();
+                    if(!tempImages.containsKey(fileID)) { } else {
+                        aUrl = tempImages.get(selectedMessage.getStringID());System.out.println("aUrl = " + aUrl);
+                    }
+                try {
+                    fileLoc = SaveImageFromUrl(aUrl, selectedMessage.getStringID());
+                } catch (IOException ex) {
+                    Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                File sourceimage = new File(fileLoc);
+                System.out.println("1020:fileLoc:" + fileLoc);
+                try {
+                    avatar.setIcon(new ImageIcon(ImageIO.read(sourceimage)));
+                } catch (IOException ex) {
+                    Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    }
+        }}
     });
             
     }
@@ -931,6 +1016,126 @@ public class start extends javax.swing.JFrame{
         }
         }
     }
+    
+    public void loadTables(){
+        String aString = null;
+        try {
+            aString = channelCombo.getSelectedItem().toString();
+        } catch (Exception e) {
+            return;
+        }
+        
+        if(aString.length()>0){
+            List channels = cli.getChannels(); if(channels.size()<1) { return; } 
+            for(int i = 0;i<channels.size();i++){
+                IChannel aChan = (IChannel) channels.get(i);
+                if (aChan.getName().equalsIgnoreCase(aString)) { selectedChannel = aChan; }
+                
+            }
+        } else { return; }
+        if(selectedDate!=null) {} else { incDate.setSelected(false); }
+        
+        
+        // -------------------------->  inc Date <------------------------
+        
+        if(incDate.isSelected() && selectedDate.toString().length()>0) {
+            
+            messagesList = selectedChannel.getMessageHistoryFrom(selectedDate, 1000);
+            } else {
+            messagesList = selectedChannel.getMessageHistory(1000); }               // if date then grab from then +1000
+                                                                                    // else grab last 1000
+        setupMessagesTable();
+        
+        String word = wordSearch.getText();String text="";refinedMessageList.clear();
+        if (word.length()<1) { incTerm.setSelected(false); }
+            
+        if (incTerm.isSelected()){
+                for(int ip = 0;ip<messagesList.size();ip++){
+                    IMessage mp = (IMessage) messagesList.get(ip);
+                    
+                    text = mp.getContent() +
+                     " " + mp.getAuthor().getName() +
+                     " " + mp.getCreationDate().toString() +
+                     " " + mp.getMentions().toString() +
+                     " " + mp.getTimestamp().toString();
+                    
+                    if(text.contains(word)) { refinedMessageList.add(mp); }
+                }
+                messagesList = refinedMessageList;
+            }
+        
+        boolean hasEmbed = false, hasAttachment = false;                            // begin refining the list
+        
+        for (int i = 0; i<messagesList.size(); i++ ) {
+            IMessage m = (IMessage) messagesList.get(i);                            // if embed or attachment flag them
+            if(m.getEmbeds().size()>0) { hasEmbed = true; } else { hasEmbed = false; }
+            if(m.getAttachments().size()>0) { hasAttachment = true; } else { hasAttachment = false; }
+            
+
+            if(exTextOnly.isSelected() && (hasEmbed || hasAttachment)) { insertRow(m,messageDisplay); } else {
+                if(incTerm.isSelected()) { insertRow(m,messageDisplay); } else {
+                    if(!exTextOnly.isSelected()) {  insertRow(m,messageDisplay); }
+                }
+            }
+        }
+    }
+    
+        
+    public String SaveImageFromUrl(String u, String id) throws MalformedURLException, IOException{
+        String code = "";String destinationFile = "";
+        boolean success = (new File("/temporaryFiles/")).mkdirs();            // make folder
+        if (!success) {
+            System.out.println("Error on FolderSave, pictures");
+        }
+        String imageUrl = u;
+        
+        if (imageUrl.endsWith("0.png")) { return ""; }
+        
+        if (u.length()!=0) {return "";}
+        destinationFile = id + u.substring(u.length()-4, u.length());  // could throw fileFormat error, it did!!! :-(
+       
+        try {
+            saveImage(imageUrl, destinationFile);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return destinationFile;
+        }
+
+    public void saveImage(String imageUrl, String destinationFile) throws FileNotFoundException, IOException{
+        try {
+            imageUrl = imageUrl.substring(0, imageUrl.length()-5)+".png";
+            URL url = new URL(imageUrl);
+            OutputStream os;
+            try (InputStream is = url.openStream()) {
+                os = new FileOutputStream(destinationFile);
+                byte[] b = new byte[2048];
+                int length;
+                while ((length = is.read(b)) != -1) {
+                    os.write(b, 0, length);
+                }   
+            }
+            os.close();
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        
+    public BufferedImage createResizedCopy(java.awt.Image originalImage, 
+            int scaledWidth, int scaledHeight, 
+            boolean preserveAlpha)
+        {
+            int imageType = preserveAlpha ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+            BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, imageType);
+            
+            Graphics2D g = scaledBI.createGraphics();
+                if (preserveAlpha) {
+                    g.setComposite(java.awt.AlphaComposite.Src);
+                }
+                g.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null); 
+                g.dispose();
+        return scaledBI;
+        }
     
     
     /**
@@ -989,10 +1194,12 @@ public class start extends javax.swing.JFrame{
     private javax.swing.JTabbedPane MainPane;
     private javax.swing.JPanel QPostPane;
     private javax.swing.JScrollPane QPostSroll;
+    private javax.swing.JButton addToQFolderBut;
     private javax.swing.JCheckBox attachmentCheck;
     private javax.swing.JTextField authorEdit;
     private javax.swing.JLabel authorLabel;
     private javax.swing.JLabel authorLabel1;
+    private javax.swing.JLabel avatar;
     private javax.swing.JPanel backdrop;
     private javax.swing.JComboBox<String> channelCombo;
     private javax.swing.JLabel channelLabel;
@@ -1002,32 +1209,30 @@ public class start extends javax.swing.JFrame{
     private javax.swing.JTextField dateSearch;
     private javax.swing.JCheckBox embedCheck;
     private javax.swing.JCheckBox exTextOnly;
-    private javax.swing.JTextPane fMessageDisplay;
+    private javax.swing.JEditorPane fMessageDisplay;
     private javax.swing.JComboBox<String> guildCombo;
     private javax.swing.JLabel guildLabel;
     private javax.swing.JCheckBox incDate;
     private javax.swing.JCheckBox incTerm;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel loadPane;
     private javax.swing.JButton loadTables;
     private javax.swing.JButton logInBut;
-    private javax.swing.JButton logInBut1;
+    private javax.swing.JLabel messageDetailsLabel;
     private javax.swing.JTable messageDisplay;
     private javax.swing.JScrollPane mssagesScroll;
     private javax.swing.JTable qPostList;
